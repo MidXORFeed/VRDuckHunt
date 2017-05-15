@@ -7,20 +7,20 @@ using UnityEngine.UI;
 
 public class SplashFade : MonoBehaviour {
 
-    public float FADE_TIME = 2.0f;
-    public float FADING_DURATION = 3.0f;
+    public float WAIT_FADE_TIME = 3.0f;
+    public float FADING_DURATION = 1.5f;
     public Image splashImage;
-    private string loadLevel = "StartScene";
+    public int loadLevel;
 
     private IEnumerator Start()
     {
         splashImage.canvasRenderer.SetAlpha(0.0f);
 
         FadeIn();
-        yield return new WaitForSeconds(FADE_TIME);
+        yield return new WaitForSeconds(WAIT_FADE_TIME);
         FadeOut();
-        yield return new WaitForSeconds(FADE_TIME);
-        SceneManager.LoadScene(loadLevel);
+        yield return new WaitForSeconds(WAIT_FADE_TIME);
+        LoadingScreenManager.LoadScene(loadLevel);
         
     }
 
