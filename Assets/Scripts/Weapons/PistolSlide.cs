@@ -54,6 +54,11 @@
         protected override void Update()
         {
             base.Update();
+
+            if (transform.localRotation != RestTransform.localRotation)
+            {
+                transform.localRotation = RestTransform.localRotation;
+            }
             //base.Update();
             //if (transform.localPosition.x <= restPosition)
             //{

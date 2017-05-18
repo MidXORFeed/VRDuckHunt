@@ -6,20 +6,14 @@ using VRTK.Examples;
 
 public class Pistol : VRTK_InteractableObject
 {
-    public float bulletSpeed = 200f;
-    public float bulletLife = 5f;
-
-    public GameObject bullet;
     public GameObject trigger;
     public PistolSlide slide;
-
+    public Transform restTriggerTransform;
+    public Transform maxTriggerTransform;
     private Rigidbody slideRigidbody;
     private Collider slideCollider;
 
     private VRTK_ControllerEvents controllerEvents;
-
-    private float minTriggerRotation = -10f;
-    private float maxTriggerRotation = 45f;
 
     private void ToggleCollision(Rigidbody objRB, Collider objCol, bool state)
     {
@@ -79,18 +73,12 @@ public class Pistol : VRTK_InteractableObject
     {
         base.StartUsing(currentUsingObject);
         StartCoroutine(slide.Fire());
-        FireBullet();
         VRTK_ControllerHaptics.TriggerHapticPulse(VRTK_ControllerReference.GetControllerReference(controllerEvents.gameObject), 0.63f, 0.2f, 0.01f);
     }
 
     protected override void Awake()
     {
         base.Awake();
-
-        if (bullet)
-        {
-            bullet.SetActive(false);
-        }
 
         if (slide)
         {
@@ -104,21 +92,11 @@ public class Pistol : VRTK_InteractableObject
         base.Update();
         if (controllerEvents)
         {
-            var pressure = (maxTriggerRotation * controllerEvents.GetTriggerAxis()) - minTriggerRotation;
-            trigger.transform.localEulerAngles = new Vector3(0f, pressure, 0f);
-        }
-        else
+            float pressure = (maxTriggerTransform.localPosition.x - restTriggerTransform.localPosition.x) * controllerEvents.GetTriggerAxis();
+            trigger.transform.localPosition = new Vector3(restTriggerTransform.localPosition.x + pressure, trigger.transform.localPosition.y, trigger.transform.localPosition.z);
+        } else
         {
-            trigger.transform.localEulerAngles = new Vector3(0f, minTriggerRotation, 0f);
+            trigger.transform.localPosition = new Vector3(restTriggerTransform.localPosition.x, restTriggerTransform.localPosition.y, restTriggerTransform.localPosition.z);
         }
-    }
-
-    private void FireBullet()
-    {
-        GameObject bulletClone = Instantiate(bullet, bullet.transform.position, bullet.transform.rotation) as GameObject;
-        bulletClone.SetActive(true);
-        Rigidbody rb = bulletClone.GetComponent<Rigidbody>();
-        rb.AddForce(bullet.transform.forward * bulletSpeed);
-        Destroy(bulletClone, bulletLife);
     }
 }
