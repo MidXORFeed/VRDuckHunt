@@ -27,7 +27,6 @@ public class Pistol : VRTK_InteractableObject
         {
             slide.ForceStopInteracting();
         }
-        slide.enabled = state;
         slide.isGrabbable = state;
         ToggleCollision(slideRigidbody, slideCollider, state);
     }

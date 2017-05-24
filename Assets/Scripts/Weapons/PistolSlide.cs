@@ -9,15 +9,19 @@
         public Transform MaxSlideTransform;
 
         private IEnumerator currentCoroutine;
-        private float SlideSpeed = 0.0005f;
-        private float SlideTime = 0.1f;
+        private float SlideBackSpeed = 0.0005f;
+        private float SlideForthSpeed = 0.00025f;
+        private float SlideHack = 100000.0f;
 
         public IEnumerator Fire()
         {
-            currentCoroutine = SlideBack();
-            StartCoroutine(currentCoroutine);
+            if (currentCoroutine != null)
+            {
+                StopCoroutine(currentCoroutine);
+            }
 
-            yield return new WaitForSeconds(SlideTime);
+            currentCoroutine = SlideBack();
+            yield return StartCoroutine(currentCoroutine);
 
             if (currentCoroutine != null)
             {
@@ -25,25 +29,27 @@
             }
 
             currentCoroutine = SlideForth();
-            StartCoroutine(currentCoroutine);
+            yield return StartCoroutine(currentCoroutine);
         }
 
         IEnumerator SlideBack()
         {
             while (transform.localPosition != MaxSlideTransform.localPosition)
             {
-                transform.localPosition = Vector3.MoveTowards(transform.localPosition, MaxSlideTransform.localPosition, SlideSpeed);
+                transform.localPosition = Vector3.MoveTowards(transform.localPosition, MaxSlideTransform.localPosition, SlideBackSpeed);
                 yield return null;
             }
+            currentCoroutine = null;
         }
 
         IEnumerator SlideForth()
         {
             while (transform.localPosition != RestTransform.localPosition)
             {
-                transform.localPosition = Vector3.MoveTowards(transform.localPosition, RestTransform.localPosition, SlideSpeed);
+                transform.localPosition = Vector3.MoveTowards(transform.localPosition, RestTransform.localPosition, SlideForthSpeed);
                 yield return null;
             }
+            currentCoroutine = null;
         }
 
         protected override void Awake()
@@ -59,6 +65,16 @@
             {
                 transform.localRotation = RestTransform.localRotation;
             }
+
+            if (currentCoroutine == null && transform.localPosition != RestTransform.localPosition)
+            {
+                if (transform.localPosition != MaxSlideTransform.localPosition)
+                {
+                    transform.localPosition = Vector3.MoveTowards(transform.localPosition, RestTransform.localPosition, SlideHack);
+                }
+            }
+
+
             //base.Update();
             //if (transform.localPosition.x <= restPosition)
             //{
