@@ -7,11 +7,20 @@
     {
         public Transform RestTransform;
         public Transform MaxSlideTransform;
+        public GameObject leftController;
+        public GameObject rightController;
 
         private IEnumerator currentCoroutine;
         private float SlideBackSpeed = 0.0005f;
         private float SlideForthSpeed = 0.00025f;
         private float SlideHack = 100000.0f;
+        private float changeInControllerXPosition = 0.0f;
+        private float previousControllerXPosition = 0.0f;
+        private float controllerTranslationRatio = 50;
+
+
+        private VRTK_ControllerEvents controllerEvents;
+        
 
         public IEnumerator Fire()
         {
@@ -66,36 +75,13 @@
                 transform.localRotation = RestTransform.localRotation;
             }
 
-            if (currentCoroutine == null && transform.localPosition != RestTransform.localPosition)
+            if (!IsGrabbed() && currentCoroutine == null && transform.localPosition != RestTransform.localPosition)
             {
                 if (transform.localPosition != MaxSlideTransform.localPosition)
                 {
                     transform.localPosition = Vector3.MoveTowards(transform.localPosition, RestTransform.localPosition, SlideHack);
                 }
             }
-
-
-            //base.Update();
-            //if (transform.localPosition.x <= restPosition)
-            //{
-            //    transform.localPosition = new Vector3(restPosition, transform.localPosition.y, transform.localPosition.z);
-            //}
-
-            //if (fireTimer == 0 && transform.localPosition.x > restPosition && !IsGrabbed())
-            //{
-            //    transform.localPosition = new Vector3(transform.localPosition.x - boltSpeed, transform.localPosition.y, transform.localPosition.z);
-            //}
-
-            //if (fireTimer > 0)
-            //{
-            //    transform.localPosition = new Vector3(transform.localPosition.x - boltSpeed, transform.localPosition.y, transform.localPosition.z);
-            //    fireTimer -= boltSpeed;
-            //}
-
-            //if (fireTimer < 0)
-            //{
-            //    fireTimer = 0;
-            //}
         }
     }
 }
