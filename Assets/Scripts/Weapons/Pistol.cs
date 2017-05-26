@@ -6,14 +6,16 @@ using VRTK.Examples;
 
 public class Pistol : VRTK_InteractableObject
 {
+    public GameObject magazineSlot;
     public GameObject trigger;
     public PistolSlide slide;
     public Transform restTriggerTransform;
     public Transform maxTriggerTransform;
     private Rigidbody slideRigidbody;
     private Collider slideCollider;
-
     private VRTK_ControllerEvents controllerEvents;
+    private bool tMagazineEventHeard;
+    private Magazine equippedMagazine;
 
     private void ToggleCollision(Rigidbody objRB, Collider objCol, bool state)
     {
@@ -75,6 +77,36 @@ public class Pistol : VRTK_InteractableObject
         VRTK_ControllerHaptics.TriggerHapticPulse(VRTK_ControllerReference.GetControllerReference(controllerEvents.gameObject), 0.63f, 0.2f, 0.01f);
     }
 
+    private void OnMagazineAttach()
+    {
+        tMagazineEventHeard = true;
+    }
+
+    private void OnMagazineDetach()
+    {
+        tMagazineEventHeard = false;
+    }
+
+    private void EquipMagazine()
+    {
+        if (magazineSlot.GetComponentInChildren<Magazine>() != null)
+        {
+            equippedMagazine = magazineSlot.GetComponentInChildren<Magazine>();
+            int currentBullets = magazineSlot.GetComponentInChildren<Magazine>().currentBullets;
+            tMagazineEventHeard = false;
+            Debug.Log(currentBullets);
+        }
+    }
+
+    void Start()
+    {
+        for (int i = 0; i < FindObjectsOfType<Magazine>().Length; i++)
+        {
+            FindObjectsOfType<Magazine>()[i].detachEvent += OnMagazineDetach;
+            FindObjectsOfType<Magazine>()[i].attachEvent += OnMagazineAttach;
+        }
+    }
+
     protected override void Awake()
     {
         base.Awake();
@@ -96,6 +128,11 @@ public class Pistol : VRTK_InteractableObject
         } else
         {
             trigger.transform.localPosition = new Vector3(restTriggerTransform.localPosition.x, restTriggerTransform.localPosition.y, restTriggerTransform.localPosition.z);
+        }
+
+        if (tMagazineEventHeard)
+        {
+            EquipMagazine();
         }
     }
 }

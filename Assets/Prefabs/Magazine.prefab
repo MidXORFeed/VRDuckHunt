@@ -69,7 +69,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1407511188403946}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -0.31758833, y: 1.444, z: 0.51}
+  m_LocalPosition: {x: -0.227, y: 1.444, z: 1.495}
   m_LocalScale: {x: 15, y: 15, z: 15}
   m_Children:
   - {fileID: 4030630348287464}
@@ -198,7 +198,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c8bcc408a054294e92c96d8040eb095, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  disableWhenIdle: 1
+  disableWhenIdle: 0
   touchHighlightColor: {r: 1, g: 0.12758619, b: 0.12758619, a: 0.503}
   allowedTouchControllers: 0
   ignoredColliders: []
@@ -217,3 +217,5 @@ MonoBehaviour:
   useOverrideButton: 0
   allowedUseControllers: 0
   usingState: 0
+  currentBullets: 0
+  CLIP_SIZE: 16
