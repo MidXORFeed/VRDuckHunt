@@ -92,9 +92,7 @@ public class Pistol : VRTK_InteractableObject
         if (magazineSlot.GetComponentInChildren<Magazine>() != null)
         {
             equippedMagazine = magazineSlot.GetComponentInChildren<Magazine>();
-            int currentBullets = magazineSlot.GetComponentInChildren<Magazine>().currentBullets;
             tMagazineEventHeard = false;
-            Debug.Log(currentBullets);
         }
     }
 

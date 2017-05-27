@@ -74,7 +74,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1386026417808148
 GameObject:
   m_ObjectHideFlags: 0
@@ -217,6 +217,8 @@ GameObject:
   - component: {fileID: 114465627982645384}
   - component: {fileID: 114929747908644094}
   - component: {fileID: 65261785554949860}
+  - component: {fileID: 114661468478417946}
+  - component: {fileID: 111103474376120850}
   m_Layer: 0
   m_Name: Slide
   m_TagString: Untagged
@@ -280,11 +282,11 @@ GameObject:
   m_Component:
   - component: {fileID: 4694228131727934}
   - component: {fileID: 54792846301806596}
+  - component: {fileID: 65574136885984224}
   - component: {fileID: 114495131752419562}
   - component: {fileID: 114919785993155754}
   - component: {fileID: 114971611412043936}
   - component: {fileID: 114500679862519452}
-  - component: {fileID: 65574136885984224}
   - component: {fileID: 114331394293855512}
   m_Layer: 0
   m_Name: S&W
@@ -339,7 +341,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1810388269586278}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.00082, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4992873925215412}
@@ -830,6 +832,21 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.07, y: 0.0920115, z: 0.0222321}
   m_Center: {x: 0.06, y: -0.02, z: 0}
+--- !u!111 &111103474376120850
+Animation:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1810388269586278}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 08bf1ec0cde507a4fb6bc8375e5c97c7, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 08bf1ec0cde507a4fb6bc8375e5c97c7, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!114 &114331394293855512
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -910,7 +927,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   disableWhenIdle: 1
-  touchHighlightColor: {r: 0.9044118, g: 0.059850782, b: 0.88111377, a: 0}
+  touchHighlightColor: {r: 0.27450982, g: 1, b: 0.1882353, a: 0.3764706}
   allowedTouchControllers: 0
   ignoredColliders: []
   isGrabbable: 1
@@ -928,6 +945,7 @@ MonoBehaviour:
   useOverrideButton: 0
   allowedUseControllers: 0
   usingState: 0
+  magazineSlot: {fileID: 1386026417808148}
   trigger: {fileID: 1864579215573052}
   slide: {fileID: 114564892443331442}
   restTriggerTransform: {fileID: 4822410759466848}
@@ -979,10 +997,25 @@ MonoBehaviour:
   useOverrideButton: 0
   allowedUseControllers: 0
   usingState: 0
+  pullMultiplier: 5
+  pullOffset: 0.1
+  maxPullDistance: 1
   RestTransform: {fileID: 4992873925215412}
   MaxSlideTransform: {fileID: 4624184815224818}
   leftController: {fileID: 0}
   rightController: {fileID: 0}
+--- !u!114 &114661468478417946
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1810388269586278}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71c966293c20a984489167243ae3c9aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animation: {fileID: 111103474376120850}
 --- !u!114 &114760005149342460
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1000,7 +1033,7 @@ MonoBehaviour:
   snapDuration: 0
   applyScalingOnSnap: 0
   highlightColor: {r: 0.56747407, g: 0.9411765, b: 0.64736915, a: 0}
-  highlightAlwaysActive: 1
+  highlightAlwaysActive: 0
   validObjectListPolicy: {fileID: 114376897452058458}
   displayDropZoneInEditor: 1
   defaultSnappedObject: {fileID: 1407511188403946, guid: 6eaf1b008efb8b840942bf0153bf463d,
