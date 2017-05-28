@@ -177,8 +177,8 @@
         {
             slideState = SlideState.NoAction;
             sliderAnimation = GetComponent<SliderAnimation>();
-            this.InteractableObjectGrabbed += new InteractableObjectEventHandler(DoObjectGrab);
-            this.InteractableObjectUngrabbed += new InteractableObjectEventHandler(DoObjectUnGrab);
+            InteractableObjectGrabbed += new InteractableObjectEventHandler(DoObjectGrab);
+            InteractableObjectUngrabbed += new InteractableObjectEventHandler(DoObjectUnGrab);
         }
 
         protected override void Awake()

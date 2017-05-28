@@ -6,11 +6,14 @@ using VRTK.Examples;
 
 public class Pistol : VRTK_InteractableObject
 {
+    public Rigidbody bullet;
+    public float bulletForce;
     public GameObject magazineSlot;
     public GameObject trigger;
     public PistolSlide slide;
     public Transform restTriggerTransform;
     public Transform maxTriggerTransform;
+    public Transform bulletSpawn;
     private Rigidbody slideRigidbody;
     private Collider slideCollider;
     private VRTK_ControllerEvents controllerEvents;
@@ -20,6 +23,12 @@ public class Pistol : VRTK_InteractableObject
     public Magazine GetEquippedMagazine()
     {
         return equippedMagazine;
+    }
+
+    private void FireBullet()
+    {
+        Rigidbody bulletClone = (Rigidbody)Instantiate(bullet, bulletSpawn.position, bulletSpawn.rotation);
+        bulletClone.AddForce(-bulletSpawn.right * bulletForce, ForceMode.Impulse);
     }
 
     private void UnchamberBullet()
@@ -105,6 +114,10 @@ public class Pistol : VRTK_InteractableObject
     {
         base.StartUsing(currentUsingObject);
         StartCoroutine(slide.Fire());
+        if (slide.isBulletChambered)
+        {
+            FireBullet();
+        }
         VRTK_ControllerHaptics.TriggerHapticPulse(VRTK_ControllerReference.GetControllerReference(controllerEvents.gameObject), 0.63f, 0.2f, 0.01f);
     }
 

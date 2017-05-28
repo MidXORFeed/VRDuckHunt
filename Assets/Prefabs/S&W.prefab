@@ -499,13 +499,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1219524059989890}
-  m_LocalRotation: {x: -0.7071068, y: -0.00000019861236, z: 0.7071068, w: 0.00000019861236}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.008747486, y: 0, z: 0.004983953}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4689582689634030}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 179.99998}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4922637660513674
 Transform:
   m_ObjectHideFlags: 1
@@ -945,11 +945,14 @@ MonoBehaviour:
   useOverrideButton: 0
   allowedUseControllers: 0
   usingState: 0
+  bullet: {fileID: 54339953056087900, guid: 90922710d0a2ac44ca2129ce0b45fee5, type: 2}
+  bulletSpeed: 0.5
   magazineSlot: {fileID: 1386026417808148}
   trigger: {fileID: 1864579215573052}
   slide: {fileID: 114564892443331442}
   restTriggerTransform: {fileID: 4822410759466848}
   maxTriggerTransform: {fileID: 4301878525580148}
+  bulletSpawn: {fileID: 4902034220525844}
 --- !u!114 &114500679862519452
 MonoBehaviour:
   m_ObjectHideFlags: 1
