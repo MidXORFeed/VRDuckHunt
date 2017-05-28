@@ -40,14 +40,15 @@ public class Pistol : VRTK_InteractableObject
 
     private void UnchamberBullet()
     {
-        float yMagnitude = GetRandomFloat(0f, 2.0f);
-        float zMagnitude = GetRandomFloat(0f, 2.0f);
+        float yMagnitude = GetRandomFloat(1.0f, 2.0f);
+        float zMagnitude = GetRandomFloat(0.5f, 1.0f);
 
         if (slide.isBulletChambered)
         {
             slide.isBulletChambered = false;
             Rigidbody bulletClone = (Rigidbody)Instantiate(bullet, caseSpawn.position, caseSpawn.rotation);
             bulletClone.AddForce(new Vector3(0, yMagnitude, zMagnitude) * caseEjectionForce, ForceMode.Impulse);
+            bulletClone.rotation = Random.rotation;
         }
     }
 
