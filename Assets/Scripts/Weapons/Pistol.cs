@@ -17,6 +17,37 @@ public class Pistol : VRTK_InteractableObject
     private bool tMagazineEventHeard;
     private Magazine equippedMagazine;
 
+    public Magazine GetEquippedMagazine()
+    {
+        return equippedMagazine;
+    }
+
+    private void UnchamberBullet()
+    {
+        Debug.Log("UnchamberedBullet");
+        if (slide.isBulletChambered)
+        {
+            slide.isBulletChambered = false;
+        }
+    }
+
+    private void ChamberBullet()
+    {
+        Debug.Log("ChamberedBullet");
+        if (equippedMagazine != null)
+        {
+            if (equippedMagazine.currentBullets > 0)
+            {
+                equippedMagazine.currentBullets--;
+                slide.isBulletChambered = true;
+                slide.canChamberNewBullet = true;
+            } else
+            {
+                slide.canChamberNewBullet = false;
+            }
+        }
+    }
+
     private void ToggleCollision(Rigidbody objRB, Collider objCol, bool state)
     {
         objRB.isKinematic = state;
@@ -103,6 +134,8 @@ public class Pistol : VRTK_InteractableObject
             FindObjectsOfType<Magazine>()[i].detachEvent += OnMagazineDetach;
             FindObjectsOfType<Magazine>()[i].attachEvent += OnMagazineAttach;
         }
+        FindObjectOfType<PistolSlide>().chamberBulletEvent += ChamberBullet;
+        FindObjectOfType<PistolSlide>().unchamberBulletEvent += UnchamberBullet;
     }
 
     protected override void Awake()

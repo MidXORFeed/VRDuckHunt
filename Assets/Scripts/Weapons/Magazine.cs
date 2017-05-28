@@ -11,8 +11,8 @@ public class Magazine : VRTK_InteractableObject {
 
     public delegate void AttachDelegate();
     public delegate void DetachDelegate();
-    public AttachDelegate attachEvent;
-    public DetachDelegate detachEvent;
+    public event AttachDelegate attachEvent;
+    public event DetachDelegate detachEvent;
 
 	// Use this for initialization
 	void Start () {

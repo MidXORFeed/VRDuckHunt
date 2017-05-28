@@ -8,11 +8,19 @@
         public float pullMultiplier;
         public float pullOffset;
         public float maxPullDistance = 1.0f;
+        public float toggleChamberEvent = 0.7f;
+        public bool isBulletChambered;
+        public bool canChamberNewBullet;
 
         public Transform RestTransform;
         public Transform MaxSlideTransform;
         public GameObject leftController;
         public GameObject rightController;
+
+        public delegate void ChamberBulletDelegate();
+        public delegate void UnchamberBulletDelegate();
+        public event ChamberBulletDelegate chamberBulletEvent;
+        public event UnchamberBulletDelegate unchamberBulletEvent;
 
         private VRTK_InteractGrab holdControl;
         private VRTK_InteractGrab sliderControl;
@@ -24,7 +32,33 @@
 
         private SliderAnimation sliderAnimation;
         private float previousPull;
-        private float currentPull;
+        public float currentPull;
+        private SlideState slideState;
+
+        private enum SlideState
+        {
+            NoAction,
+            Unchambering,
+            Chambering
+        }
+
+        void ChamberBullet()
+        {
+            if (chamberBulletEvent != null)
+            {
+                slideState = SlideState.Chambering;
+                chamberBulletEvent();
+            }
+        }
+
+        void UnchamberBullet()
+        {
+            if (unchamberBulletEvent != null)
+            {
+                slideState = SlideState.Unchambering;
+                unchamberBulletEvent();
+            }
+        }
 
         private void DoObjectGrab(object sender, InteractableObjectEventArgs e)
         {
@@ -56,13 +90,16 @@
             currentCoroutine = SlideBack();
             yield return StartCoroutine(currentCoroutine);
 
-            if (currentCoroutine != null)
+            if (canChamberNewBullet)
             {
-                StopCoroutine(currentCoroutine);
-            }
+                if (currentCoroutine != null)
+                {
+                    StopCoroutine(currentCoroutine);
+                }
 
-            currentCoroutine = SlideForth();
-            yield return StartCoroutine(currentCoroutine);
+                currentCoroutine = SlideForth();
+                yield return StartCoroutine(currentCoroutine);
+            }
         }
 
         IEnumerator SlideBack()
@@ -95,6 +132,7 @@
                 yield return null;
             }
             currentCoroutine = null;
+            slideState = SlideState.NoAction;
         }
 
         private void PullSlider()
@@ -104,8 +142,40 @@
             previousPull = currentPull;
         }
 
+        private void AutoFixRotation()
+        {
+            if (transform.localRotation != RestTransform.localRotation)
+            {
+                transform.localRotation = RestTransform.localRotation;
+            }
+        }
+
+        private void AutoFixPosition()
+        {
+            if (!IsGrabbed() && currentCoroutine == null && transform.localPosition != RestTransform.localPosition)
+            {
+                if (transform.localPosition != MaxSlideTransform.localPosition)
+                {
+                    transform.localPosition = Vector3.MoveTowards(transform.localPosition, RestTransform.localPosition, SlideHack);
+                }
+            }
+        }
+
+        private void UpdateChamberState()
+        {
+            if (slideState == SlideState.NoAction && currentPull >= toggleChamberEvent)
+            {
+                UnchamberBullet();
+            }
+            else if (slideState == SlideState.Unchambering && currentPull < toggleChamberEvent)
+            {
+                ChamberBullet();
+            }
+        }
+
         void Start()
         {
+            slideState = SlideState.NoAction;
             sliderAnimation = GetComponent<SliderAnimation>();
             this.InteractableObjectGrabbed += new InteractableObjectEventHandler(DoObjectGrab);
             this.InteractableObjectUngrabbed += new InteractableObjectEventHandler(DoObjectUnGrab);
@@ -120,24 +190,13 @@
         protected override void Update()
         {
             base.Update();
-
-            if (transform.localRotation != RestTransform.localRotation)
-            {
-                transform.localRotation = RestTransform.localRotation;
-            }
-
-            if (!IsGrabbed() && currentCoroutine == null && transform.localPosition != RestTransform.localPosition)
-            {
-                if (transform.localPosition != MaxSlideTransform.localPosition)
-                {
-                    transform.localPosition = Vector3.MoveTowards(transform.localPosition, RestTransform.localPosition, SlideHack);
-                }
-            }
-
+            AutoFixRotation();
+            AutoFixPosition();
             if (IsGrabbed())
             {
                 PullSlider();
             }
+            UpdateChamberState();
         }
     }
 }
