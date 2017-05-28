@@ -7,6 +7,7 @@ public class Magazine : VRTK_InteractableObject {
 
     public int currentBullets;
     public int CLIP_SIZE;
+    private GameObject bullet;
     private bool bAttached = false;
 
     public delegate void AttachDelegate();
@@ -20,6 +21,7 @@ public class Magazine : VRTK_InteractableObject {
         bAttached = false;
         InteractableObjectSnappedToDropZone += new InteractableObjectEventHandler(Attach);
         InteractableObjectUnsnappedFromDropZone += new InteractableObjectEventHandler(Detach);
+        bullet = transform.FindChild("9mm").gameObject;
     }
 	
     void Attach(object sender, InteractableObjectEventArgs e)
@@ -40,6 +42,12 @@ public class Magazine : VRTK_InteractableObject {
 
 	// Update is called once per frame
 	protected override void Update () {
-
+        if (currentBullets <= 0)
+        {
+            if (bullet != null)
+            {
+                bullet.SetActive(false);
+            }
+        }
 	}
 }

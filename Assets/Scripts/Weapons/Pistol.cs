@@ -28,7 +28,7 @@ public class Pistol : VRTK_InteractableObject
     private void FireBullet()
     {
         Rigidbody bulletClone = (Rigidbody)Instantiate(bullet, bulletSpawn.position, bulletSpawn.rotation);
-        bulletClone.AddForce(-bulletSpawn.right * bulletForce, ForceMode.Impulse);
+        bulletClone.AddForce(-bulletSpawn.up * bulletForce, ForceMode.Impulse);
     }
 
     private void UnchamberBullet()
