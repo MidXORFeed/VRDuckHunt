@@ -12,6 +12,7 @@
         public bool isBulletChambered;
         public bool canChamberNewBullet;
 
+        public GameObject bullet;
         public Transform RestTransform;
         public Transform MaxSlideTransform;
         public GameObject leftController;
@@ -173,6 +174,11 @@
             }
         }
 
+        private void RenderChamberedBullet()
+        {
+            bullet.SetActive(isBulletChambered);
+        }
+
         void Start()
         {
             slideState = SlideState.NoAction;
@@ -197,6 +203,7 @@
                 PullSlider();
             }
             UpdateChamberState();
+            RenderChamberedBullet();
         }
     }
 }
