@@ -18,9 +18,11 @@ public class Magazine : VRTK_InteractableObject {
 	void Start () {
         currentBullets = CLIP_SIZE;
         bAttached = false;
+        InteractableObjectSnappedToDropZone += new InteractableObjectEventHandler(Attach);
+        InteractableObjectUnsnappedFromDropZone += new InteractableObjectEventHandler(Detach);
     }
 	
-    void Attach()
+    void Attach(object sender, InteractableObjectEventArgs e)
     {
         if (attachEvent != null)
         {
@@ -28,7 +30,7 @@ public class Magazine : VRTK_InteractableObject {
         }
     }
 
-    void Detach()
+    void Detach(object sender, InteractableObjectEventArgs e)
     {
         if (detachEvent != null)
         {
@@ -38,16 +40,6 @@ public class Magazine : VRTK_InteractableObject {
 
 	// Update is called once per frame
 	protected override void Update () {
-        if (!bAttached && IsInSnapDropZone())
-        {
-            bAttached = true;
-            Attach();
-        }
 
-        if (bAttached && !IsInSnapDropZone())
-        {
-            bAttached = false;
-            Detach();
-        }
 	}
 }
