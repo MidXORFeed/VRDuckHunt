@@ -8,12 +8,14 @@ public class Pistol : VRTK_InteractableObject
 {
     public Rigidbody bullet;
     public float bulletForce;
+    public float caseEjectionForce;
     public GameObject magazineSlot;
     public GameObject trigger;
     public PistolSlide slide;
     public Transform restTriggerTransform;
     public Transform maxTriggerTransform;
     public Transform bulletSpawn;
+    public Transform caseSpawn;
     private Rigidbody slideRigidbody;
     private Collider slideCollider;
     private VRTK_ControllerEvents controllerEvents;
@@ -25,6 +27,11 @@ public class Pistol : VRTK_InteractableObject
         return equippedMagazine;
     }
 
+    private float GetRandomFloat(float min, float maximum)
+    {
+        return Random.Range(min, maximum);
+    }
+
     private void FireBullet()
     {
         Rigidbody bulletClone = (Rigidbody)Instantiate(bullet, bulletSpawn.position, bulletSpawn.rotation);
@@ -33,16 +40,19 @@ public class Pistol : VRTK_InteractableObject
 
     private void UnchamberBullet()
     {
-        Debug.Log("UnchamberedBullet");
+        float yMagnitude = GetRandomFloat(0f, 2.0f);
+        float zMagnitude = GetRandomFloat(0f, 2.0f);
+
         if (slide.isBulletChambered)
         {
             slide.isBulletChambered = false;
+            Rigidbody bulletClone = (Rigidbody)Instantiate(bullet, caseSpawn.position, caseSpawn.rotation);
+            bulletClone.AddForce(new Vector3(0, yMagnitude, zMagnitude) * caseEjectionForce, ForceMode.Impulse);
         }
     }
 
     private void ChamberBullet()
     {
-        Debug.Log("ChamberedBullet");
         if (equippedMagazine != null)
         {
             if (equippedMagazine.currentBullets > 0)

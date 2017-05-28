@@ -276,9 +276,34 @@ Prefab:
       propertyPath: rightController
       value: 
       objectReference: {fileID: 1673073343}
+    - target: {fileID: 114495131752419562, guid: 1d3ba2da38686d240a28051f479514bf,
+        type: 2}
+      propertyPath: casingSpawn
+      value: 
+      objectReference: {fileID: 52593743}
+    - target: {fileID: 114495131752419562, guid: 1d3ba2da38686d240a28051f479514bf,
+        type: 2}
+      propertyPath: caseEjectionForce
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114495131752419562, guid: 1d3ba2da38686d240a28051f479514bf,
+        type: 2}
+      propertyPath: caseSpawn
+      value: 
+      objectReference: {fileID: 52593743}
+    - target: {fileID: 114495131752419562, guid: 1d3ba2da38686d240a28051f479514bf,
+        type: 2}
+      propertyPath: bulletForce
+      value: 0.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1d3ba2da38686d240a28051f479514bf, type: 2}
   m_IsPrefabParent: 0
+--- !u!4 &52593743 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4365712756421294, guid: 1d3ba2da38686d240a28051f479514bf,
+    type: 2}
+  m_PrefabInternal: {fileID: 52593742}
 --- !u!1 &84478239
 GameObject:
   m_ObjectHideFlags: 0
