@@ -214,8 +214,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 01d5f944020259248b89cdad55173949, type: 3}
   - {fileID: 8300000, guid: 22279186d6da3f1498affd2c9ecb7dfb, type: 3}
   - {fileID: 8300000, guid: 51fcf928d40b7f943ba156c18dfe3280, type: 3}
-  volMin: 0.7
-  volMax: 1
+  volMin: 0.1
+  volMax: 0.3
   pitchMin: 0.7
   pitchMax: 1
   playOnAwake: 0
