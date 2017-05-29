@@ -288,4 +288,4 @@ MonoBehaviour:
   allowedUseControllers: 0
   usingState: 0
   currentBullets: 0
-  CLIP_SIZE: 8
+  CLIP_SIZE: 12

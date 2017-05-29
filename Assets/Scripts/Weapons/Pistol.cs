@@ -11,6 +11,7 @@ public class Pistol : VRTK_InteractableObject
     public float bulletForce;
     public float caseEjectionForceMin;
     public float caseEjectionForceMax;
+    public float caseEjectionTorqueForce;
     public GameObject magazineSlot;
     public GameObject trigger;
     public PistolSlide slide;
@@ -45,13 +46,14 @@ public class Pistol : VRTK_InteractableObject
     {
         float caseForwardEjectionForce = GetRandomFloat(caseEjectionForceMin, caseEjectionForceMax);
         float caseRightEjectionForce = GetRandomFloat(caseEjectionForceMin, caseEjectionForceMax);
-
+        Vector3 randomTorque = new Vector3(GetRandomFloat(0, 1), GetRandomFloat(0, 1), GetRandomFloat(0, 1)) * caseEjectionTorqueForce;
         if (slide.isBulletChambered)
         {
             slide.isBulletChambered = false;
             Rigidbody bulletClone = (Rigidbody)Instantiate(bullet, caseSpawn.position, caseSpawn.rotation);
             bulletClone.AddForce((caseSpawn.forward * caseForwardEjectionForce) + (caseSpawn.right * caseRightEjectionForce), ForceMode.Impulse);
             bulletClone.rotation = Random.rotation;
+            bulletClone.GetComponent<Rigidbody>().AddTorque(randomTorque);
         }
     }
 
