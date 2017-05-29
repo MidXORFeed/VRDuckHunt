@@ -388,7 +388,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1720954059497876}
   m_LocalRotation: {x: -0, y: -0, z: -0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: -0.00219, z: 0.00486}
+  m_LocalPosition: {x: 0, y: -0.0021, z: 0.0056}
   m_LocalScale: {x: 0.09000009, y: 0.090000086, z: 0.090000086}
   m_Children: []
   m_Father: {fileID: 4459371729126564}
@@ -1154,7 +1154,8 @@ MonoBehaviour:
   bullet: {fileID: 54380714835943830, guid: 8b95123a4aa255b439965399d5f3cd90, type: 2}
   bulletForce: 1.5
   caseEjectionForceMin: 0
-  caseEjectionForceMax: 0.3
+  caseEjectionForceMax: 0.2
+  caseEjectionTorqueForce: 5
   magazineSlot: {fileID: 1386026417808148}
   trigger: {fileID: 1864579215573052}
   slide: {fileID: 114564892443331442}

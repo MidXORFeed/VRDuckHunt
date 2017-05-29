@@ -7833,13 +7833,8 @@ Prefab:
       objectReference: {fileID: 1673073343}
     - target: {fileID: 114495131752419562, guid: 1d3ba2da38686d240a28051f479514bf,
         type: 2}
-      propertyPath: bulletForce
-      value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 114495131752419562, guid: 1d3ba2da38686d240a28051f479514bf,
-        type: 2}
-      propertyPath: caseEjectionTorqueForce
-      value: 5
+      propertyPath: caseEjectionForceMax
+      value: 0.2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1d3ba2da38686d240a28051f479514bf, type: 2}
