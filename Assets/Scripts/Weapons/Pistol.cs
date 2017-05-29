@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Valve.VR.InteractionSystem;
 using VRTK;
 using VRTK.Examples;
 
@@ -17,6 +18,7 @@ public class Pistol : VRTK_InteractableObject
     public Transform maxTriggerTransform;
     public Transform bulletSpawn;
     public Transform caseSpawn;
+    public SoundPlayOneshot gunshotSound;
     private Rigidbody slideRigidbody;
     private Collider slideCollider;
     private VRTK_ControllerEvents controllerEvents;
@@ -129,6 +131,10 @@ public class Pistol : VRTK_InteractableObject
         if (slide.isBulletChambered)
         {
             FireBullet();
+            if (gunshotSound != null)
+            {
+                gunshotSound.Play();
+            } 
         }
         VRTK_ControllerHaptics.TriggerHapticPulse(VRTK_ControllerReference.GetControllerReference(controllerEvents.gameObject), 0.63f, 0.2f, 0.01f);
     }

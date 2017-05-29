@@ -60,7 +60,7 @@ GameObject:
   - component: {fileID: 33583808302724186}
   - component: {fileID: 23524190836717426}
   m_Layer: 0
-  m_Name: WPN_cal_9mm
+  m_Name: 9mm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -99,7 +99,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1407511188403946}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -0.3899652, y: 1.397, z: 1.4639139}
+  m_LocalPosition: {x: -0.3899652, y: 1.397, z: 1.54}
   m_LocalScale: {x: 15, y: 15, z: 15}
   m_Children:
   - {fileID: 4030630348287464}
@@ -210,8 +210,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.006916676, y: 0.0022933553, z: 0.011090923}
-  m_Center: {x: 0.00011412974, y: -0.000035989284, z: 0.00010710755}
+  m_Size: {x: 0.0045887274, y: 0.002293355, z: 0.009168137}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &114001600150806358
 MonoBehaviour:
   m_ObjectHideFlags: 1
