@@ -862,10 +862,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 7
       objectReference: {fileID: 0}
-    - target: {fileID: 1663328596443648, guid: 6eaf1b008efb8b840942bf0153bf463d, type: 2}
-      propertyPath: m_Name
-      value: 9mm
-      objectReference: {fileID: 0}
     - target: {fileID: 1407511188403946, guid: 6eaf1b008efb8b840942bf0153bf463d, type: 2}
       propertyPath: m_Name
       value: Magazine (1)

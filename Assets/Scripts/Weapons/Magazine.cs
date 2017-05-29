@@ -9,6 +9,7 @@ public class Magazine : VRTK_InteractableObject {
     public int CLIP_SIZE;
     private GameObject bullet;
     private bool bAttached = false;
+    private BoxCollider collider;
 
     public delegate void AttachDelegate();
     public delegate void DetachDelegate();
@@ -19,15 +20,21 @@ public class Magazine : VRTK_InteractableObject {
 	void Start () {
         currentBullets = CLIP_SIZE;
         bAttached = false;
+        bullet = transform.FindChild("9mm").gameObject;
+        collider = GetComponent<BoxCollider>();
         InteractableObjectSnappedToDropZone += new InteractableObjectEventHandler(Attach);
         InteractableObjectUnsnappedFromDropZone += new InteractableObjectEventHandler(Detach);
-        bullet = transform.FindChild("9mm").gameObject;
+        
     }
 	
     void Attach(object sender, InteractableObjectEventArgs e)
     {
         if (attachEvent != null)
         {
+            if (collider != null)
+            {
+                collider.isTrigger = true;
+            }
             attachEvent();
         }
     }
@@ -36,6 +43,10 @@ public class Magazine : VRTK_InteractableObject {
     {
         if (detachEvent != null)
         {
+            if (collider != null)
+            {
+                collider.isTrigger = false;
+            }
             detachEvent();
         }
     }

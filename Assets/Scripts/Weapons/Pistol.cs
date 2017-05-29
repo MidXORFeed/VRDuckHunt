@@ -128,7 +128,7 @@ public class Pistol : VRTK_InteractableObject
     {
         base.StartUsing(currentUsingObject);
         StartCoroutine(slide.Fire());
-        if (slide.isBulletChambered)
+        if (slide.isBulletChambered && !slide.IsGrabbed())
         {
             FireBullet();
             if (gunshotSound != null)
