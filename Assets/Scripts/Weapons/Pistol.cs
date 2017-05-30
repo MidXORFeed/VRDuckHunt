@@ -19,12 +19,15 @@ public class Pistol : VRTK_InteractableObject
     public Transform maxTriggerTransform;
     public Transform bulletSpawn;
     public Transform caseSpawn;
-    public SoundPlayOneshot gunshotSound;
     private Rigidbody slideRigidbody;
     private Collider slideCollider;
     private VRTK_ControllerEvents controllerEvents;
     private bool tMagazineEventHeard;
     private Magazine equippedMagazine;
+
+    public SoundPlayOneshot gunshotSound;
+    public SoundPlayOneshot onTriggerPressSound;
+    public SoundPlayOneshot onTriggerReleaseSound;
 
     public Magazine GetEquippedMagazine()
     {
@@ -135,6 +138,7 @@ public class Pistol : VRTK_InteractableObject
             FireBullet();
             if (gunshotSound != null)
             {
+                onTriggerPressSound.Play();
                 gunshotSound.Play();
             } 
         }

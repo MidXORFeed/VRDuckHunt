@@ -2,6 +2,7 @@
 {
     using System.Collections;
     using UnityEngine;
+    using Valve.VR.InteractionSystem;
 
     public class PistolSlide : VRTK_InteractableObject
     {
@@ -35,6 +36,9 @@
         private float previousPull;
         public float currentPull;
         private SlideState slideState;
+
+        public SoundPlayOneshot onSlideBackSound;
+        public SoundPlayOneshot onSlideForthSound;
 
         private enum SlideState
         {
@@ -113,9 +117,11 @@
                 {
                     currentPull = maxSlidePosition;
                 }
+                
                 sliderAnimation.SetFrame(currentPull);
                 yield return null;
             }
+            onSlideBackSound.Play();
             currentCoroutine = null;
         }
 
@@ -132,6 +138,7 @@
                 sliderAnimation.SetFrame(currentPull);
                 yield return null;
             }
+            onSlideForthSound.Play();
             currentCoroutine = null;
             slideState = SlideState.NoAction;
         }

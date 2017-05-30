@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Valve.VR.InteractionSystem;
 using VRTK;
 
 public class Magazine : VRTK_InteractableObject {
@@ -16,8 +17,11 @@ public class Magazine : VRTK_InteractableObject {
     public event AttachDelegate attachEvent;
     public event DetachDelegate detachEvent;
 
-	// Use this for initialization
-	void Start () {
+    public SoundPlayOneshot onMagazineLoadSound;
+    public SoundPlayOneshot onMagazineUnloadSound;
+
+    // Use this for initialization
+    void Start () {
         currentBullets = CLIP_SIZE;
         bAttached = false;
         bullet = transform.FindChild("9mm").gameObject;
@@ -36,6 +40,7 @@ public class Magazine : VRTK_InteractableObject {
                 collider.isTrigger = true;
             }
             attachEvent();
+            onMagazineLoadSound.Play();
         }
     }
 
@@ -48,6 +53,7 @@ public class Magazine : VRTK_InteractableObject {
                 collider.isTrigger = false;
             }
             detachEvent();
+            onMagazineUnloadSound.Play();
         }
     }
 
