@@ -28,7 +28,6 @@ public class Magazine : VRTK_InteractableObject {
         collider = GetComponent<BoxCollider>();
         InteractableObjectSnappedToDropZone += new InteractableObjectEventHandler(Attach);
         InteractableObjectUnsnappedFromDropZone += new InteractableObjectEventHandler(Detach);
-        
     }
 	
     void Attach(object sender, InteractableObjectEventArgs e)

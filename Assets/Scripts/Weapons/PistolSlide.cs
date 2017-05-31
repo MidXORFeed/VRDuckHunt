@@ -29,7 +29,7 @@
 
         private IEnumerator currentCoroutine;
         private float SlideBackSpeed = 0.166f;
-        private float SlideForthSpeed = 0.083f;
+        private float SlideForthSpeed = 0.4f;
         private float SlideHack = 100000.0f;
 
         private SliderAnimation sliderAnimation;
