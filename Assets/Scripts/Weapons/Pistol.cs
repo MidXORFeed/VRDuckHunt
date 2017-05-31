@@ -145,6 +145,12 @@ public class Pistol : VRTK_InteractableObject
         VRTK_ControllerHaptics.TriggerHapticPulse(VRTK_ControllerReference.GetControllerReference(controllerEvents.gameObject), 0.63f, 0.2f, 0.01f);
     }
 
+    public override void StopUsing(GameObject currentUsingObject)
+    {
+        base.StopUsing(currentUsingObject);
+        onTriggerReleaseSound.Play();
+    }
+
     private void OnMagazineAttach()
     {
         tMagazineEventHeard = true;

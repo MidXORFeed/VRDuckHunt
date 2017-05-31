@@ -732,7 +732,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1984930396232492}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.338, y: 1.49, z: 0.02}
+  m_LocalPosition: {x: -0.338, y: 1.49, z: 0.761}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_Children:
   - {fileID: 4689582689634030}
@@ -1874,8 +1874,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 022318638e342ea4dbf26c34092a1c95, type: 3}
   - {fileID: 8300000, guid: fd44bc10c3c678c488238fafdb6c7116, type: 3}
   - {fileID: 8300000, guid: 91fe3877cb25d3a40ba09ca9a1c61e82, type: 3}
-  volMin: 0.1
-  volMax: 0.3
+  volMin: 0.3
+  volMax: 0.5
   pitchMin: 0.6
   pitchMax: 1
   playOnAwake: 0
