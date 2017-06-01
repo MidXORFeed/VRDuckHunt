@@ -595,7 +595,7 @@ MonoBehaviour:
   allowedTouchControllers: 0
   ignoredColliders: []
   isGrabbable: 1
-  holdButtonToGrab: 1
+  holdButtonToGrab: 0
   stayGrabbedOnTeleport: 1
   validDrop: 1
   grabOverrideButton: 0
@@ -611,5 +611,6 @@ MonoBehaviour:
   usingState: 0
   currentBullets: 0
   CLIP_SIZE: 12
+  timeToDie: 5
   onMagazineLoadSound: {fileID: 114127089876222598}
   onMagazineUnloadSound: {fileID: 114398219331433692}
