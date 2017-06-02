@@ -67,6 +67,11 @@ public class Pistol : VRTK_InteractableObject
             equippedMagazine.currentBullets--;
             slide.isBulletChambered = true;
             slide.canChamberNewBullet = true;
+
+            if (equippedMagazine.currentBullets == 0)
+            {
+                slide.canChamberNewBullet = false;
+            }
         } else
         {
             slide.canChamberNewBullet = false;
@@ -165,6 +170,10 @@ public class Pistol : VRTK_InteractableObject
         {
             equippedMagazine = magazineSlot.GetComponentInChildren<Magazine>();
             tMagazineEventHeard = false;
+            if (equippedMagazine.currentBullets > 0)
+            {
+                slide.canChamberNewBullet = true;
+            }
         }
     }
 
