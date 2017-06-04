@@ -68,7 +68,7 @@ public class Pistol : VRTK_InteractableObject
             slide.isBulletChambered = true;
             slide.canChamberNewBullet = true;
 
-            if (equippedMagazine.currentBullets == 0)
+            if (equippedMagazine.currentBullets == 0 || equippedMagazine == null)
             {
                 slide.canChamberNewBullet = false;
             }
@@ -161,6 +161,7 @@ public class Pistol : VRTK_InteractableObject
     private void OnMagazineDetach()
     {
         equippedMagazine = null;
+        slide.canChamberNewBullet = false;
         tMagazineEventHeard = false;
     }
 
