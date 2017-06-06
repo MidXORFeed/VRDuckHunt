@@ -231,6 +231,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playOneShot: {fileID: 114159926202720012}
+  timeToDie: 5
 --- !u!136 &136645779362064358
 CapsuleCollider:
   m_ObjectHideFlags: 1

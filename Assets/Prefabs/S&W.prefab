@@ -732,7 +732,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1984930396232492}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.338, y: 1.49, z: 0.761}
+  m_LocalPosition: {x: -0.038, y: 1.49, z: 1.376}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_Children:
   - {fileID: 4689582689634030}
@@ -1188,8 +1188,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.11832146, y: 0.08, z: 0.026561102}
-  m_Center: {x: 0.040839255, y: -0.01, z: 0.0017194748}
+  m_Size: {x: 0.1376583, y: 0.08, z: 0.040149376}
+  m_Center: {x: 0.044373006, y: -0.01, z: -0.00034157312}
 --- !u!65 &65625128007556744
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -1764,7 +1764,7 @@ MonoBehaviour:
   allowedTouchControllers: 0
   ignoredColliders: []
   isGrabbable: 1
-  holdButtonToGrab: 1
+  holdButtonToGrab: 0
   stayGrabbedOnTeleport: 1
   validDrop: 1
   grabOverrideButton: 0
@@ -1874,8 +1874,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 022318638e342ea4dbf26c34092a1c95, type: 3}
   - {fileID: 8300000, guid: fd44bc10c3c678c488238fafdb6c7116, type: 3}
   - {fileID: 8300000, guid: 91fe3877cb25d3a40ba09ca9a1c61e82, type: 3}
-  volMin: 0.3
-  volMax: 0.5
+  volMin: 0.1
+  volMax: 0.3
   pitchMin: 0.6
   pitchMax: 1
   playOnAwake: 0
