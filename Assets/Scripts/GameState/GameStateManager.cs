@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class GameStateManager : MonoBehaviour {
 
-    Stack<GameState> gameStateStack;
-    GameState currentState;
+    Stack<GameState.GameStates> gameStateStack;
+    GameState.GameStates currentState;
 
 
 	// Use this for initialization
 	void Start () {
-		
-	}
+        
+    }
 	
 	// Update is called once per frame
 	void Update () {

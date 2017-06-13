@@ -3,10 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameState : IGameState
+public class GameState : MonoBehaviour, IGameState
 {
-
-    public enum MenuStates
+    public enum GameStates
     {
         MainMenu,
         NewGame,
@@ -23,11 +22,7 @@ public class GameState : IGameState
         Options,
         Graphics,
         Audio,
-        Scoreboard
-    }
-
-    public enum GameStates
-    {
+        Scoreboard,
         Pregame,
         RoundStarting,
         RoundStarted,
@@ -36,7 +31,17 @@ public class GameState : IGameState
         Postgame,
     }
 
+    // Use this for initialization
+    void Start()
+    {
 
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
 
     void IGameState.Pause()
     {
