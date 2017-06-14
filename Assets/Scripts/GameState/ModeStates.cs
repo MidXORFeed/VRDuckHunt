@@ -2,16 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameState : State {
+public class ModeStates : State {
 
     public enum GameStates
     {
-        Pregame,
-        RoundStarting,
-        RoundStarted,
-        RoundInProgress,
-        RoundCompleted,
-        Postgame
+        WaveProgression,
+        QuickShot,
+        TimeAttack
     }
 
     // Use this for initialization

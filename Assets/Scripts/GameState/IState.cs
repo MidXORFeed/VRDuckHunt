@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
-
-public interface IGameState {
+public interface IState {
 
     void Pause();
     void Resume();
