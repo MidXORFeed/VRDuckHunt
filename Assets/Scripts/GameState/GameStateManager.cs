@@ -4,13 +4,30 @@ using UnityEngine;
 
 public class GameStateManager : MonoBehaviour {
 
-    Stack<GameState.GameStates> gameStateStack;
-    GameState.GameStates currentState;
+    public MenuInteractions menuInteractions;
 
+
+    private Stack<GameState.GameStates> gameStateStack;
+    private GameState.GameStates currentState;
+
+    private void StartButtonPressed()
+    {
+        currentState = GameState.GameStates.NewGame;
+        gameStateStack.Push(currentState);
+    }
+
+    private void BackButtonPressed()
+    {
+        if (gameStateStack.Count > 0)
+        {
+            gameStateStack.Pop();
+        }
+    }
 
 	// Use this for initialization
 	void Start () {
-        
+        menuInteractions.BackButtonEvent += BackButtonPressed;
+        menuInteractions.SinglePlayerButtonEvent += StartButtonPressed;
     }
 	
 	// Update is called once per frame
