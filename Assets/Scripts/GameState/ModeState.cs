@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ModeStates : State {
+public class ModeState : State {
 
     public enum GameStates
     {
