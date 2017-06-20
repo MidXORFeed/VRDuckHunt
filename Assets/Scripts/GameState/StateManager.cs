@@ -5,8 +5,6 @@ using UnityEngine;
 public class StateManager : MonoBehaviour {
 
     public MenuInteractions menuInteractions;
-
-
     private Stack<State> stateStack;
     private State currentState;
 
@@ -22,30 +20,30 @@ public class StateManager : MonoBehaviour {
     /* Single Player Menu */
     private void StartButtonPressed()
     {
-        currentState = State.GameStates.NewGame;
-        stateStack.Push(currentState);
+        stateStack.Push(new State(State.Type.NewGame));
     }
 
     private void WaveProgressionButtonPressed()
     {
-        currentState = State.GameStates.WaveProgression;
-        stateStack.Push(currentState);
+        stateStack.Push(new State(State.Type.WaveProgression));
     }
 
     private void QuickShotButtonPressed()
     {
-        currentState = State.GameStates.QuickShot;
-        stateStack.Push(currentState);
+        stateStack.Push(new State(State.Type.QuickShot));
     }
 
     private void TimeAttackButtonPressed()
     {
-        currentState = State.GameStates.TimeAttack;
-        stateStack.Push(currentState);
+        stateStack.Push(new State(State.Type.TimeAttack));
     }
 
     // Use this for initialization
     void Start () {
+        stateStack = new Stack<State>();
+        stateStack.Push(new State(State.Type.MainMenu));
+        currentState = stateStack.Peek();
+        Debug.Log(currentState);
         menuInteractions.BackButtonEvent += BackButtonPressed;
         menuInteractions.SinglePlayerButtonEvent += StartButtonPressed;
         menuInteractions.WaveProgressionButtonEvent += WaveProgressionButtonPressed;

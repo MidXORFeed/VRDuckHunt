@@ -6,5 +6,6 @@ public interface IState {
 
     void Pause();
     void Resume();
+    void PerformAction();
 
 }
