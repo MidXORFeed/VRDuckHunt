@@ -53,6 +53,9 @@ public class StateManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	    
+        if (stateStack.Count > 0)
+        {
+            stateStack.Pop().PerformAction();
+        }
 	}
 }
