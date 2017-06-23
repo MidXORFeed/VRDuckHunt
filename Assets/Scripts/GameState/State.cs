@@ -64,47 +64,71 @@ public class State : MonoBehaviour, IState
     {
         switch(assignedState)
         {
-            case Type.Audio:
-                break;
-            case Type.Graphics:
-                break;
-            case Type.LevelSelect:
-                break;
-            case Type.LoadGame:
-                break;
-            case Type.LocalMultiplayer:
-                break;
             case Type.MainMenu:
-                break;
-            case Type.Multiplayer:
+                MainMenuAction();
                 break;
             case Type.NewGame:
-                break;
-            case Type.OnlineMultiplayer:
-                break;
-            case Type.Options:
-                break;
-            case Type.Postgame:
-                break;
-            case Type.Pregame:
-                break;
-            case Type.QuickShot:
-                break;
-            case Type.RoundCompleted:
-                break;
-            case Type.RoundInProgress:
-                break;
-            case Type.RoundStarted:
-                break;
-            case Type.Scoreboard:
-                break;
-            case Type.SharedMultiplayer:
+                NewGameAction();
                 break;
             case Type.SinglePlayer:
-                break;
-            case Type.TimeAttack:
+                SinglePlayerAction();
                 break;
             case Type.WaveProgression:
+                WaveProgressionAction();
+                break;
+            case Type.QuickShot:
+                QuickShotAction();
+                break;
+            case Type.TimeAttack:
+                TimeAttackAction();
+                break;
+            case Type.LoadGame:
+                LoadGameAction();
+                break;
+            case Type.LevelSelect:
+                LevelSelectAction();
+                break;
+            case Type.Multiplayer:
+                MultiplayerAction();
+                break;
+            case Type.SharedMultiplayer:
+                SharedMultiplayerAction();
+                break;
+            case Type.OnlineMultiplayer:
+                OnlineMultiplayerAction();
+                break;
+            case Type.LocalMultiplayer:
+                LocalMultiplayerAction();
+                break;
+            case Type.Options:
+                OptionsAction();
+                break;
+            case Type.Graphics:
+                GraphicsAction();
+                break;
+            case Type.Audio:
+                AudioAction();
+                break;
+            case Type.Scoreboard:
+                ScoreBoardAction();
+                break;
+            case Type.Pregame:
+                PregameAction();
+                break;
+            case Type.RoundStarting:
+                RoundStartingAction();
+                break;
+            case Type.RoundStarted:
+                RoundStartedAction();
+                break;
+            case Type.RoundInProgress:
+                RoundInProgressAction();
+                break;
+            case Type.RoundCompleted:
+                RoundCompletedAction();
+                break;
+            case Type.Postgame:
+                PostGameAction();
                 break;
         }
     }
@@ -114,34 +138,9 @@ public class State : MonoBehaviour, IState
         return assignedState;
     }
 
-    void AudioAction()
-    {
-        // Render Audio Menu
-    }
-
-    void GraphicsAction()
-    {
-        // Render Graphics Menu
-    }
-
-    void LevelSelectAction()
-    {
-        // Render LevelSelect Menu
-    }
-
-    void LocalMultiplayerAction()
-    {
-        // Render LocalMultiplayer Menu
-    }
-
     void MainMenuAction()
     {
         // Render Main Menu
-    }
-
-    void MultiplayerAction()
-    {
-        // Render Multiplayer Menu
     }
 
     void NewGameAction()
@@ -149,9 +148,57 @@ public class State : MonoBehaviour, IState
         // Render NewGame Menu
     }
 
+    void SinglePlayerAction()
+    {
+        // Render SinglePlayer Menu
+    }
+
+    void WaveProgressionAction()
+    {
+        // Transition state to RoundStarting
+        // Set GameMode to WaveProgression
+    }
+
+    void QuickShotAction()
+    {
+        // Transition state to RoundStarting
+        // Set GameMode to Quickshot
+    }
+
+    void TimeAttackAction()
+    {
+        // Transition state to RoundStarting
+        // Set GameMode to Quickshot
+    }
+
+    void LoadGameAction()
+    {
+        // Render LoadGame Menu
+    }
+
+    void LevelSelectAction()
+    {
+        // Render Level Select Menu
+    }
+
+    void MultiplayerAction()
+    {
+        // TBD
+    }
+
+    void SharedMultiplayerAction()
+    {
+        // TBD
+    }
+
     void OnlineMultiplayerAction()
     {
         // Render OnlineMultiplayer Menu
+    }
+
+    void LocalMultiplayerAction()
+    {
+        // Render LocalMultiplayer Menu
     }
 
     void OptionsAction()
@@ -159,11 +206,13 @@ public class State : MonoBehaviour, IState
         // Render Options Menu
     }
 
-    void PostGameAction()
+    void GraphicsAction()
     {
-        // Offer method of restarting game
-        // Display restart button somewhere?
-        // Pressing restart button should transition state back to RoundStarting
+        // Render Graphics Menu
+    }
+
+    void ScoreBoardAction()
+    {
 
     }
 
@@ -173,16 +222,14 @@ public class State : MonoBehaviour, IState
         // User is free to interact with their environment without points
     }
 
-    void QuickShotAction()
+    void RoundStartingAction()
     {
-        // Quickshot mode selected
-        // Should transition state to RoundStarting
+        // Initialize Pre-Round countdown
     }
 
-    void RoundCompletedAction()
+    void RoundStartedAction()
     {
-        // Offer a small down time before transitioning to RoundStarting
-        // Display overlay stats for that round?
+        // Initialize Round countdown
     }
 
     void RoundInProgressAction()
@@ -191,33 +238,21 @@ public class State : MonoBehaviour, IState
         // Transition to RoundCompleted when 
     }
 
-    void RoundStartedAction()
+    void RoundCompletedAction()
     {
-
+        // Offer a small down time before transitioning to RoundStarting
+        // Display overlay stats for that round?
     }
 
-    void ScoreBoardAction()
+    void AudioAction()
     {
-
+        // Render Audio Menu
     }
 
-    void SharedMultiplayerAction()
+    void PostGameAction()
     {
-
-    }
-
-    void SinglePlayerAction()
-    {
-
-    }
-
-    void TimeAttackAction()
-    {
-
-    }
-
-    void WaveProgressionAction()
-    {
-
+        // Offer method of restarting game
+        // Display restart button somewhere?
+        // Pressing restart button should transition state back to RoundStarting
     }
 }
