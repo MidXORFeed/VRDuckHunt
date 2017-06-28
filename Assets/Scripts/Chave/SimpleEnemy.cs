@@ -7,7 +7,7 @@ public class SimpleEnemy : MonoBehaviour
     Transform target;
     Animator enemy;
     UnityEngine.AI.NavMeshAgent agent;
-    public int enemyMaxHeath = 3;
+    public int enemyMaxHeath = 4;
     int enemyHeath;
 
     void Awake()
@@ -18,7 +18,7 @@ public class SimpleEnemy : MonoBehaviour
 
         agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
 
-        enemyHeath = Random.Range(1, enemyMaxHeath);
+        enemyHeath = Random.Range(2, enemyMaxHeath);
     }
 
     void Update()
@@ -34,7 +34,7 @@ public class SimpleEnemy : MonoBehaviour
                 
             if (enemyHeath != 0)
             {
-                enemyHeath--;
+                enemyHeath = enemyHeath - 1;
                 enemy.Play("EnemyFlash");
 
                 if (enemyHeath == 0)
