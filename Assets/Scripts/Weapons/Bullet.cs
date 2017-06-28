@@ -6,10 +6,11 @@ using Valve.VR.InteractionSystem;
 public class Bullet : MonoBehaviour {
 
     public SoundPlayOneshot playOneShot;
+    public float timeToDie;
 
 	// Use this for initialization
 	void Start () {
-		
+        Destroy(this.gameObject, timeToDie);
 	}
 	
 	// Update is called once per frame
@@ -17,7 +18,7 @@ public class Bullet : MonoBehaviour {
 		
 	}
 
-    private void OnCollisionEnter(Collision collision)
+    void OnCollisionEnter(Collision collision)
     {
         if (playOneShot != null)
         {

@@ -8,6 +8,7 @@ public class Magazine : VRTK_InteractableObject {
 
     public int currentBullets;
     public int CLIP_SIZE;
+    public float timeToDie;
     private GameObject bullet;
     private bool bAttached = false;
     private BoxCollider collider;
@@ -53,11 +54,30 @@ public class Magazine : VRTK_InteractableObject {
             }
             detachEvent();
             onMagazineUnloadSound.Play();
+            if (ShouldDestroy())
+            {
+                Destroy(this.gameObject, timeToDie);
+            }
         }
     }
 
-	// Update is called once per frame
-	protected override void Update () {
+    bool ShouldDestroy()
+    {
+        if (currentBullets <= 0)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    void OnDestroy()
+    {
+        InteractableObjectSnappedToDropZone -= Attach;
+        InteractableObjectUnsnappedFromDropZone -= Detach;
+    }
+
+    // Update is called once per frame
+    protected override void Update () {
         if (currentBullets <= 0)
         {
             if (bullet != null)
