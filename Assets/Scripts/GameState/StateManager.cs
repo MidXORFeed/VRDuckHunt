@@ -5,6 +5,7 @@ using UnityEngine;
 public class StateManager : MonoBehaviour {
 
     public MenuInteractions menuInteractions;
+    private IEnumerator currentCoroutine;
     private Stack<State> stateStack;
     private State currentState;
 
@@ -53,9 +54,16 @@ public class StateManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (stateStack.Count > 0)
+        if (stateStack.Count > 0 && currentCoroutine != null)
         {
-            stateStack.Pop().PerformAction();
+            currentCoroutine = stateStack.Pop().PerformAction();
+            StartCoroutine(currentCoroutine);
+            currentCoroutine = null;
         }
 	}
+
+    public void PushState(State newState)
+    {
+        stateStack.Push(newState);
+    }
 }

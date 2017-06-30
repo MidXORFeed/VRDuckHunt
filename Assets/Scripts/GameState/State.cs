@@ -5,7 +5,10 @@ using UnityEngine;
 
 public class State : MonoBehaviour, IState
 {
+    private StateManager stateManager;
     private Type assignedState;
+    private IEnumerator currentCoroutine;
+    private float preRoundTimerDuration = 5.0f;
 
     public State(Type StateType)
     {
@@ -41,7 +44,7 @@ public class State : MonoBehaviour, IState
     // Use this for initialization
     void Start()
     {
-
+        stateManager = FindObjectOfType<StateManager>();
     }
 
     // Update is called once per frame
@@ -60,12 +63,12 @@ public class State : MonoBehaviour, IState
         throw new NotImplementedException();
     }
 
-    public virtual void PerformAction()
+    public virtual IEnumerator PerformAction()
     {
         switch(assignedState)
         {
             case Type.MainMenu:
-                MainMenuAction();
+                yield return StartCoroutine(MainMenuAction());
                 break;
             case Type.NewGame:
                 NewGameAction();
@@ -138,121 +141,156 @@ public class State : MonoBehaviour, IState
         return assignedState;
     }
 
-    void MainMenuAction()
+    IEnumerator MainMenuAction()
     {
         // Render Main Menu
+        yield return null;
     }
 
-    void NewGameAction()
+    IEnumerator NewGameAction()
     {
         // Render NewGame Menu
+        yield return null;
     }
 
-    void SinglePlayerAction()
+    IEnumerator SinglePlayerAction()
     {
         // Render SinglePlayer Menu
+        yield return null;
     }
 
-    void WaveProgressionAction()
+    IEnumerator WaveProgressionAction()
     {
         // Transition state to RoundStarting
         // Set GameMode to WaveProgression
+        yield return null;
     }
 
-    void QuickShotAction()
+    IEnumerator QuickShotAction()
     {
         // Transition state to RoundStarting
         // Set GameMode to Quickshot
+        yield return null;
     }
 
-    void TimeAttackAction()
+    IEnumerator TimeAttackAction()
     {
         // Transition state to RoundStarting
         // Set GameMode to Quickshot
+        yield return null;
     }
 
-    void LoadGameAction()
+    IEnumerator LoadGameAction()
     {
         // Render LoadGame Menu
+        yield return null;
     }
 
-    void LevelSelectAction()
+    IEnumerator LevelSelectAction()
     {
         // Render Level Select Menu
+        yield return null;
     }
 
-    void MultiplayerAction()
+    IEnumerator MultiplayerAction()
     {
         // TBD
+        yield return null;
     }
 
-    void SharedMultiplayerAction()
+    IEnumerator SharedMultiplayerAction()
     {
         // TBD
+        yield return null;
     }
 
-    void OnlineMultiplayerAction()
+    IEnumerator OnlineMultiplayerAction()
     {
         // Render OnlineMultiplayer Menu
+        yield return null;
     }
 
-    void LocalMultiplayerAction()
+    IEnumerator LocalMultiplayerAction()
     {
         // Render LocalMultiplayer Menu
+        yield return null;
     }
 
-    void OptionsAction()
+    IEnumerator OptionsAction()
     {
         // Render Options Menu
+        yield return null;
     }
 
-    void GraphicsAction()
+    IEnumerator GraphicsAction()
     {
         // Render Graphics Menu
+        yield return null;
     }
 
-    void ScoreBoardAction()
+    IEnumerator ScoreBoardAction()
     {
-
+        yield return null;
     }
 
-    void PregameAction()
+    IEnumerator PregameAction()
     {
         // No game mode currently selected
         // User is free to interact with their environment without points
+        yield return null;
     }
 
-    void RoundStartingAction()
+    IEnumerator RoundStartingAction()
     {
-        // Initialize Pre-Round countdown
+        float currentPreRoundTimer = preRoundTimerDuration;
+        while (currentPreRoundTimer >= 0)
+        {
+            currentPreRoundTimer -= Time.deltaTime;
+            yield return null;
+        }
+        
+        if (stateManager != null)
+        {
+            assignedState = Type.RoundStarted;
+            stateManager.PushState(this);
+        }
     }
 
-    void RoundStartedAction()
+    IEnumerator RoundStartedAction()
     {
-        // Initialize Round countdown
+        if (stateManager != null)
+        {
+            assignedState = Type.RoundInProgress;
+            stateManager.PushState(this);
+        }
+        yield return null;
     }
 
-    void RoundInProgressAction()
+    IEnumerator RoundInProgressAction()
     {
         // Spawn ducks to shoot while timer > 0 or all ducks have been eliminated
         // Transition to RoundCompleted when 
+        yield return null;
     }
 
-    void RoundCompletedAction()
+    IEnumerator RoundCompletedAction()
     {
         // Offer a small down time before transitioning to RoundStarting
         // Display overlay stats for that round?
+        yield return null;
     }
 
-    void AudioAction()
+    IEnumerator AudioAction()
     {
         // Render Audio Menu
+        yield return null;
     }
 
-    void PostGameAction()
+    IEnumerator PostGameAction()
     {
         // Offer method of restarting game
         // Display restart button somewhere?
         // Pressing restart button should transition state back to RoundStarting
+        yield return null;
     }
 }
