@@ -18,7 +18,7 @@ public class MenuInteractions : MonoBehaviour {
     {
         if (BackButtonEvent != null)
         {
-            BackButtonEvent();
+            StartCoroutine(BackButtonEvent());
         }
     }
 
@@ -26,7 +26,7 @@ public class MenuInteractions : MonoBehaviour {
     {
         if (NewGameButtonEvent != null)
         {
-            NewGameButtonEvent();
+            StartCoroutine(NewGameButtonEvent());
         }
     }
 
@@ -34,7 +34,7 @@ public class MenuInteractions : MonoBehaviour {
     {
         if (WaveProgressionButtonEvent != null)
         {
-            WaveProgressionButtonEvent();
+            StartCoroutine(WaveProgressionButtonEvent());
         }
     }
 
@@ -42,7 +42,7 @@ public class MenuInteractions : MonoBehaviour {
     {
         if (TimeAttackButtonEvent != null)
         {
-            TimeAttackButtonEvent();
+            StartCoroutine(TimeAttackButtonEvent());
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,7 +11,6 @@ public class GameStateManager : MonoBehaviour {
     MenuState currentMenuState;
     Stack<GameState> gameStateStack;
     Stack<MenuState> menuStateStack;
-
 
     enum GameState
     {
@@ -34,9 +34,6 @@ public class GameStateManager : MonoBehaviour {
         Scoreboard
     }
 
-
-
-
     // Use this for initialization
     void Start () {
         gameStateStack = new Stack<GameState>();
@@ -48,15 +45,14 @@ public class GameStateManager : MonoBehaviour {
         menuInteractions.NewGameButtonEvent += NewGameAction;
         menuInteractions.WaveProgressionButtonEvent += WaveProgressionAction;
         menuInteractions.TimeAttackButtonEvent += TimeAttackAction;
+        
     }
-	
+
     IEnumerator ManageMenuStatesCoroutines()
     {
+        currentMenuState = menuStateStack.Peek();
         switch (currentMenuState)
         {
-            case MenuState.None:
-                yield return null;
-                break;
             case MenuState.Options:
                 yield return StartCoroutine(OptionsAction());
                 break;
@@ -74,6 +70,7 @@ public class GameStateManager : MonoBehaviour {
 
     IEnumerator ManageGameStatesCoroutines()
     {
+        currentGameState = gameStateStack.Peek();
         switch (currentGameState)
         {
             case GameState.NewGame:
@@ -109,7 +106,7 @@ public class GameStateManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        if (menuStateStack.Count > 0)
+        if (menuStateStack.Peek() != MenuState.None)
         {
             StartCoroutine(ManageMenuStatesCoroutines());
         }
@@ -120,58 +117,73 @@ public class GameStateManager : MonoBehaviour {
         }
 	}
 
-    /* Miscellaneous Actions */ 
+    /***** Miscellaneous Actions *****/ 
 
     IEnumerator BackButtonAction()
     {
-        if (menuStateStack.Count > 0)
+        if (menuStateStack.Peek() != MenuState.None)
         {
-            Debug.Log(menuStateStack.Peek().ToString() + " popped from menuStack ");
             menuStateStack.Pop();
         }
         yield return null;
     }
 
-    /* Gameplay Actions */
+    /***** Gameplay Actions *****/
     IEnumerator NewGameAction()
     {
-        // Render NewGame Menu
-        gameStateStack.Push(GameState.NewGame);
-        Debug.Log(gameStateStack.Peek().ToString() + " pushed to gameStack ");
+        if (gameStateStack.Peek() != GameState.NewGame)
+        {
+            gameStateStack.Push(GameState.NewGame);
+            Debug.Log("NewGame State");
+        }
         yield return null;
     }
 
     IEnumerator WaveProgressionAction()
     {
-        gameStateStack.Push(GameState.WaveProgression);
-        Debug.Log(gameStateStack.Peek().ToString() + " pushed to gameStack ");
+        if (gameStateStack.Peek() != GameState.WaveProgression)
+        {
+            gameStateStack.Push(GameState.WaveProgression);
+            Debug.Log("WaveProgression State");
+        }
+        yield return null;
         // Transition state to RoundStarting
         // Set GameMode to WaveProgression
-        yield return null;
     }
 
     IEnumerator TimeAttackAction()
     {
-        gameStateStack.Push(GameState.TimeAttack);
-        Debug.Log(gameStateStack.Peek().ToString() + " pushed to gameStack ");
+        if (gameStateStack.Peek() != GameState.TimeAttack)
+        {
+            gameStateStack.Push(GameState.TimeAttack);
+            Debug.Log("TimeAttack State");
+        }
+        yield return null;
         // Transition state to RoundStarting
         // Set GameMode to Quickshot
-        yield return null;
+
     }
 
     IEnumerator PregameAction()
     {
-        gameStateStack.Push(GameState.Pregame);
-        Debug.Log(menuStateStack.Peek().ToString() + " pushed to gameStack ");
+        if (gameStateStack.Peek() != GameState.Pregame)
+        {
+            gameStateStack.Push(GameState.Pregame);
+            Debug.Log("Pregame State");
+        }
+        yield return null;
         // No game mode currently selected
         // User is free to interact with their environment without points
-        yield return null;
+
     }
 
     IEnumerator RoundStartingAction()
     {
-        gameStateStack.Push(GameState.RoundStarting);
-        Debug.Log(menuStateStack.Peek().ToString() + " pushed to gameStack ");
+        if (gameStateStack.Peek() != GameState.RoundStarting)
+        {
+            gameStateStack.Push(GameState.RoundStarting);
+            Debug.Log("RoundStarting State");
+        }
         yield return null;
         //float currentPreRoundTimer = preRoundTimerDuration;
         //while (currentPreRoundTimer >= 0)
@@ -189,70 +201,96 @@ public class GameStateManager : MonoBehaviour {
 
     IEnumerator RoundStartedAction()
     {
-        gameStateStack.Push(GameState.RoundStarted);
-        Debug.Log(menuStateStack.Peek().ToString() + " pushed to gameStack ");
+        if (gameStateStack.Peek() != GameState.RoundStarted)
+        {
+            gameStateStack.Push(GameState.RoundStarted);
+            Debug.Log("RoundStarted State");
+        }
         yield return null;
     }
 
     IEnumerator RoundInProgressAction()
     {
-        gameStateStack.Push(GameState.RoundInProgress);
-        Debug.Log(menuStateStack.Peek().ToString() + " pushed to gameStack ");
+        if (gameStateStack.Peek() != GameState.RoundInProgress)
+        {
+            gameStateStack.Push(GameState.RoundInProgress);
+            Debug.Log("RoundInProgress State");
+        }
         yield return null;
         // Spawn ducks to shoot while timer > 0 or all ducks have been eliminated
         // Transition to RoundCompleted when 
-        yield return null;
+
     }
 
     IEnumerator RoundCompletedAction()
     {
-        gameStateStack.Push(GameState.RoundCompleted);
-        Debug.Log(menuStateStack.Peek().ToString() + " pushed to gameStack ");
+        if (gameStateStack.Peek() != GameState.RoundCompleted)
+        {
+            gameStateStack.Push(GameState.RoundCompleted);
+            Debug.Log("RoundCompleted State");
+        }
         yield return null;
         // Offer a small down time before transitioning to RoundStarting
         // Display overlay stats for that round?
-        yield return null;
     }
 
     IEnumerator PostGameAction()
     {
+        if (gameStateStack.Peek() != GameState.Postgame)
+        {
+            gameStateStack.Push(GameState.Postgame);
+            Debug.Log("Postgame State");
+        }
         gameStateStack.Push(GameState.Postgame);
-        Debug.Log(menuStateStack.Peek().ToString() + " pushed to gameStack ");
+        
         // Offer method of restarting game
         // Display restart button somewhere?
         // Pressing restart button should transition state back to RoundStarting
         yield return null;
     }
 
-    /* Menu Actions */
+    /***** Menu Actions *****/
     IEnumerator OptionsAction()
     {
-        menuStateStack.Push(MenuState.Options);
-        Debug.Log(menuStateStack.Peek().ToString() + " pushed to menuStack ");
-        // Render Options Menu
+        if (menuStateStack.Peek() != MenuState.Options)
+        {
+            menuStateStack.Push(MenuState.Options);
+            Debug.Log("Options State");
+        }
         yield return null;
+        // Render Options Menu
+
     }
 
     IEnumerator AudioAction()
     {
-        menuStateStack.Push(MenuState.Audio);
-        Debug.Log(menuStateStack.Peek().ToString() + " pushed to menuStack ");
+        if (menuStateStack.Peek() != MenuState.Audio)
+        {
+            menuStateStack.Push(MenuState.Audio);
+            Debug.Log("Audio State");
+        } 
         // Render Audio Menu
         yield return null;
     }
 
     IEnumerator GraphicsAction()
     {
-        menuStateStack.Push(MenuState.Graphics);
-        Debug.Log(menuStateStack.Peek().ToString() + " pushed to menuStack ");
-        // Render Graphics Menu
+        if (menuStateStack.Peek() != MenuState.Graphics)
+        {
+            menuStateStack.Push(MenuState.Graphics);
+            Debug.Log("Graphics State");
+        }
         yield return null;
+        // Render Graphics Menu
     }
 
     IEnumerator ScoreboardAction()
     {
-        menuStateStack.Push(MenuState.Options);
-        Debug.Log(menuStateStack.Peek().ToString() + " pushed to menuStack ");
+        if (menuStateStack.Peek() != MenuState.Scoreboard)
+        {
+            menuStateStack.Push(MenuState.Scoreboard);
+            Debug.Log("Scoreboard State");
+        }
         yield return null;
     }
 
