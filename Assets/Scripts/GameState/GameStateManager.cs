@@ -87,6 +87,7 @@ public class GameStateManager : MonoBehaviour {
                 break;
             case GameState.RoundStarting:
                 yield return StartCoroutine(RoundStartingAction());
+                gameStateStack.Push(GameState.RoundStarted);
                 break;
             case GameState.RoundStarted:
                 yield return StartCoroutine(RoundStartedAction());
@@ -174,7 +175,6 @@ public class GameStateManager : MonoBehaviour {
         yield return null;
         // No game mode currently selected
         // User is free to interact with their environment without points
-
     }
 
     IEnumerator RoundStartingAction()
@@ -184,19 +184,16 @@ public class GameStateManager : MonoBehaviour {
             gameStateStack.Push(GameState.RoundStarting);
             Debug.Log("RoundStarting State");
         }
-        yield return null;
-        //float currentPreRoundTimer = preRoundTimerDuration;
-        //while (currentPreRoundTimer >= 0)
-        //{
-        //    currentPreRoundTimer -= Time.deltaTime;
-        //    yield return null;
-        //}
 
-        //if (stateManager != null)
-        //{
-        //    assignedState = GameState.RoundStarted;
-        //    stateManager.PushState(this);
-        //}
+        float preroundTimerDuration = 3.0f;
+        float currentPreroundTimer = preroundTimerDuration;
+
+        while (currentPreroundTimer >= 0)
+        {
+            currentPreroundTimer -= Time.deltaTime;
+            yield return null;
+        }
+        gameStateStack.Push(GameState.RoundStarted);
     }
 
     IEnumerator RoundStartedAction()
@@ -206,6 +203,10 @@ public class GameStateManager : MonoBehaviour {
             gameStateStack.Push(GameState.RoundStarted);
             Debug.Log("RoundStarted State");
         }
+
+        // Play "Go!" audio clip?
+        // Display N number of ducks to be spawned this wave
+        gameStateStack.Push(GameState.RoundInProgress);
         yield return null;
     }
 
@@ -216,7 +217,17 @@ public class GameStateManager : MonoBehaviour {
             gameStateStack.Push(GameState.RoundInProgress);
             Debug.Log("RoundInProgress State");
         }
-        yield return null;
+
+        float roundInProgressTimerDuration = 5.0f;
+        float currentRoundInProgressTimer = roundInProgressTimerDuration;
+
+        while (currentRoundInProgressTimer >= 0)
+        {
+            currentRoundInProgressTimer -= Time.deltaTime;
+            yield return null;
+        }
+        gameStateStack.Push(GameState.RoundCompleted);
+        // Call function that will spawn N number of ducks periodically
         // Spawn ducks to shoot while timer > 0 or all ducks have been eliminated
         // Transition to RoundCompleted when 
 
