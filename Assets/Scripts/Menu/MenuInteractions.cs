@@ -8,6 +8,7 @@ public class MenuInteractions : MonoBehaviour {
     /* Miscellaneous */
     // public event Action BackButtonEvent if void delegate with no parameters
     public event Func<IEnumerator> BackButtonEvent;
+    public event Action RestartButtonEvent;
     
     /* Single Player Menu */
     public event Func<IEnumerator> NewGameButtonEvent;
@@ -19,6 +20,14 @@ public class MenuInteractions : MonoBehaviour {
         if (BackButtonEvent != null)
         {
             StartCoroutine(BackButtonEvent());
+        }
+    }
+
+    public void RestartButtonPressed()
+    {
+        if (RestartButtonEvent != null)
+        {
+            RestartButtonEvent();
         }
     }
 

@@ -7,6 +7,11 @@ public class GameStateManager : MonoBehaviour {
 
     public MenuInteractions menuInteractions;
 
+    int currentRound = 1;
+    int MAX_ROUNDS = 10;
+    bool isMenuStateCoroutineRunning;
+    bool isGameStateCoroutineRunning;
+    GameState selectedGameMode;
     GameState currentGameState;
     MenuState currentMenuState;
     Stack<GameState> gameStateStack;
@@ -42,6 +47,7 @@ public class GameStateManager : MonoBehaviour {
         menuStateStack.Push(MenuState.None);
 
         menuInteractions.BackButtonEvent += BackButtonAction;
+        menuInteractions.RestartButtonEvent += RestartGameAction;
         menuInteractions.NewGameButtonEvent += NewGameAction;
         menuInteractions.WaveProgressionButtonEvent += WaveProgressionAction;
         menuInteractions.TimeAttackButtonEvent += TimeAttackAction;
@@ -66,6 +72,7 @@ public class GameStateManager : MonoBehaviour {
                 yield return StartCoroutine(ScoreboardAction());
                 break;
         }
+        isMenuStateCoroutineRunning = false;
     }
 
     IEnumerator ManageGameStatesCoroutines()
@@ -87,7 +94,6 @@ public class GameStateManager : MonoBehaviour {
                 break;
             case GameState.RoundStarting:
                 yield return StartCoroutine(RoundStartingAction());
-                gameStateStack.Push(GameState.RoundStarted);
                 break;
             case GameState.RoundStarted:
                 yield return StartCoroutine(RoundStartedAction());
@@ -102,6 +108,7 @@ public class GameStateManager : MonoBehaviour {
                 yield return StartCoroutine(PostGameAction());
                 break;
         }
+        isGameStateCoroutineRunning = false;
     }
 
 	// Update is called once per frame
@@ -109,17 +116,24 @@ public class GameStateManager : MonoBehaviour {
 
         if (menuStateStack.Peek() != MenuState.None)
         {
-            StartCoroutine(ManageMenuStatesCoroutines());
+            if (!isMenuStateCoroutineRunning)
+            {
+                isMenuStateCoroutineRunning = true;
+                StartCoroutine(ManageMenuStatesCoroutines());
+            } 
         }
 
         if (gameStateStack.Count > 0)
         {
-            StartCoroutine(ManageGameStatesCoroutines());
+            if (!isGameStateCoroutineRunning)
+            {
+                isGameStateCoroutineRunning = true;
+                StartCoroutine(ManageGameStatesCoroutines());
+            }
         }
 	}
 
     /***** Miscellaneous Actions *****/ 
-
     IEnumerator BackButtonAction()
     {
         if (menuStateStack.Peek() != MenuState.None)
@@ -127,42 +141,6 @@ public class GameStateManager : MonoBehaviour {
             menuStateStack.Pop();
         }
         yield return null;
-    }
-
-    /***** Gameplay Actions *****/
-    IEnumerator NewGameAction()
-    {
-        if (gameStateStack.Peek() != GameState.NewGame)
-        {
-            gameStateStack.Push(GameState.NewGame);
-            Debug.Log("NewGame State");
-        }
-        yield return null;
-    }
-
-    IEnumerator WaveProgressionAction()
-    {
-        if (gameStateStack.Peek() != GameState.WaveProgression)
-        {
-            gameStateStack.Push(GameState.WaveProgression);
-            Debug.Log("WaveProgression State");
-        }
-        yield return null;
-        // Transition state to RoundStarting
-        // Set GameMode to WaveProgression
-    }
-
-    IEnumerator TimeAttackAction()
-    {
-        if (gameStateStack.Peek() != GameState.TimeAttack)
-        {
-            gameStateStack.Push(GameState.TimeAttack);
-            Debug.Log("TimeAttack State");
-        }
-        yield return null;
-        // Transition state to RoundStarting
-        // Set GameMode to Quickshot
-
     }
 
     IEnumerator PregameAction()
@@ -177,14 +155,58 @@ public class GameStateManager : MonoBehaviour {
         // User is free to interact with their environment without points
     }
 
-    IEnumerator RoundStartingAction()
+    /***** Gameplay Actions *****/
+    IEnumerator NewGameAction()
     {
+        if (gameStateStack.Peek() != GameState.NewGame)
+        {
+            gameStateStack.Push(GameState.NewGame);
+        }
+        Debug.Log("NewGame State");
+        yield return null;
+    }
+
+    IEnumerator WaveProgressionAction()
+    {
+        if (gameStateStack.Peek() != GameState.WaveProgression)
+        {
+            gameStateStack.Push(GameState.WaveProgression);
+        }
+
+        Debug.Log("WaveProgression State");
+        selectedGameMode = GameState.WaveProgression;
+        
         if (gameStateStack.Peek() != GameState.RoundStarting)
         {
             gameStateStack.Push(GameState.RoundStarting);
-            Debug.Log("RoundStarting State");
+        }
+        yield return null;
+        // Set GameMode to WaveProgression
+        // Transition state to RoundStarting
+    }
+
+    IEnumerator TimeAttackAction()
+    {
+        if (gameStateStack.Peek() != GameState.TimeAttack)
+        {
+            gameStateStack.Push(GameState.TimeAttack);
         }
 
+        Debug.Log("TimeAttack State");
+        selectedGameMode = GameState.TimeAttack;
+        
+        if (gameStateStack.Peek() != GameState.RoundStarting)
+        {
+            gameStateStack.Push(GameState.RoundStarting);
+        }
+        yield return null;
+        // Set GameMode to TimeAttack
+        // Transition state to RoundStarting
+    }
+
+    IEnumerator RoundStartingAction()
+    {
+        Debug.Log("RoundStarting State");
         float preroundTimerDuration = 3.0f;
         float currentPreroundTimer = preroundTimerDuration;
 
@@ -193,31 +215,28 @@ public class GameStateManager : MonoBehaviour {
             currentPreroundTimer -= Time.deltaTime;
             yield return null;
         }
-        gameStateStack.Push(GameState.RoundStarted);
+
+        if (gameStateStack.Peek() != GameState.RoundStarted)
+        {
+            gameStateStack.Push(GameState.RoundStarted);
+        }
     }
 
     IEnumerator RoundStartedAction()
     {
-        if (gameStateStack.Peek() != GameState.RoundStarted)
+        Debug.Log("RoundStarted State");
+        if (gameStateStack.Peek() != GameState.RoundInProgress)
         {
-            gameStateStack.Push(GameState.RoundStarted);
-            Debug.Log("RoundStarted State");
+            gameStateStack.Push(GameState.RoundInProgress);
         }
-
+        yield return null;
         // Play "Go!" audio clip?
         // Display N number of ducks to be spawned this wave
-        gameStateStack.Push(GameState.RoundInProgress);
-        yield return null;
     }
 
     IEnumerator RoundInProgressAction()
     {
-        if (gameStateStack.Peek() != GameState.RoundInProgress)
-        {
-            gameStateStack.Push(GameState.RoundInProgress);
-            Debug.Log("RoundInProgress State");
-        }
-
+        Debug.Log("RoundInProgress State");
         float roundInProgressTimerDuration = 5.0f;
         float currentRoundInProgressTimer = roundInProgressTimerDuration;
 
@@ -226,7 +245,11 @@ public class GameStateManager : MonoBehaviour {
             currentRoundInProgressTimer -= Time.deltaTime;
             yield return null;
         }
-        gameStateStack.Push(GameState.RoundCompleted);
+
+        if (gameStateStack.Peek() != GameState.RoundCompleted)
+        {
+            gameStateStack.Push(GameState.RoundCompleted);
+        }
         // Call function that will spawn N number of ducks periodically
         // Spawn ducks to shoot while timer > 0 or all ducks have been eliminated
         // Transition to RoundCompleted when 
@@ -235,29 +258,60 @@ public class GameStateManager : MonoBehaviour {
 
     IEnumerator RoundCompletedAction()
     {
-        if (gameStateStack.Peek() != GameState.RoundCompleted)
+        Debug.Log("RoundCompleted State");
+        if (selectedGameMode == GameState.WaveProgression)
         {
-            gameStateStack.Push(GameState.RoundCompleted);
-            Debug.Log("RoundCompleted State");
+            float roundCompletedTimerDuration = 5.0f;
+            float currentRoundCompletedTimer = roundCompletedTimerDuration;
+            if (currentRound < MAX_ROUNDS)
+            {
+                currentRound++;
+                while (currentRoundCompletedTimer >= 0)
+                {
+                    currentRoundCompletedTimer -= Time.deltaTime;
+                    yield return null;
+                }
+
+                if (gameStateStack.Peek() != GameState.RoundStarting)
+                {
+                    gameStateStack.Push(GameState.RoundStarting);
+                }
+            } else
+            {
+                if (gameStateStack.Peek() != GameState.Postgame)
+                {
+                    gameStateStack.Push(GameState.Postgame);
+                }
+            }
+        } else if (selectedGameMode == GameState.TimeAttack)
+        {
+            if (gameStateStack.Peek() != GameState.Postgame)
+            {
+                gameStateStack.Push(GameState.Postgame);
+            }
         }
-        yield return null;
         // Offer a small down time before transitioning to RoundStarting
         // Display overlay stats for that round?
     }
 
     IEnumerator PostGameAction()
     {
-        if (gameStateStack.Peek() != GameState.Postgame)
-        {
-            gameStateStack.Push(GameState.Postgame);
-            Debug.Log("Postgame State");
-        }
-        gameStateStack.Push(GameState.Postgame);
+        Debug.Log("Postgame State");
         
         // Offer method of restarting game
         // Display restart button somewhere?
         // Pressing restart button should transition state back to RoundStarting
         yield return null;
+    }
+
+    void RestartGameAction()
+    {
+        // Called when the player presses the button to restart the game after they lose
+        if (selectedGameMode == GameState.WaveProgression)
+        {
+            currentRound = 1;
+        }
+        gameStateStack.Push(GameState.NewGame);
     }
 
     /***** Menu Actions *****/
