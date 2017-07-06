@@ -8,7 +8,7 @@ public class GameStateManager : MonoBehaviour {
     public MenuInteractions menuInteractions;
 
     int currentRound = 1;
-    int MAX_ROUNDS = 10;
+    int MAX_ROUNDS = 3;
     bool isMenuStateCoroutineRunning;
     bool isGameStateCoroutineRunning;
     GameState selectedGameMode;
@@ -206,7 +206,7 @@ public class GameStateManager : MonoBehaviour {
 
     IEnumerator RoundStartingAction()
     {
-        Debug.Log("RoundStarting State");
+        Debug.Log("Round " + currentRound + " Starting State");
         float preroundTimerDuration = 3.0f;
         float currentPreroundTimer = preroundTimerDuration;
 
@@ -224,7 +224,7 @@ public class GameStateManager : MonoBehaviour {
 
     IEnumerator RoundStartedAction()
     {
-        Debug.Log("RoundStarted State");
+        Debug.Log("Round " + currentRound + " Started State");
         if (gameStateStack.Peek() != GameState.RoundInProgress)
         {
             gameStateStack.Push(GameState.RoundInProgress);
@@ -236,7 +236,7 @@ public class GameStateManager : MonoBehaviour {
 
     IEnumerator RoundInProgressAction()
     {
-        Debug.Log("RoundInProgress State");
+        Debug.Log("Round " + currentRound + " In Progress State");
         float roundInProgressTimerDuration = 5.0f;
         float currentRoundInProgressTimer = roundInProgressTimerDuration;
 
@@ -258,7 +258,7 @@ public class GameStateManager : MonoBehaviour {
 
     IEnumerator RoundCompletedAction()
     {
-        Debug.Log("RoundCompleted State");
+        Debug.Log("Round " + currentRound + " Completed State");
         if (selectedGameMode == GameState.WaveProgression)
         {
             float roundCompletedTimerDuration = 5.0f;
