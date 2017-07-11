@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class GameStateManager : MonoBehaviour {
 
+    public GameObject enemyToSpawn;
     public MenuInteractions menuInteractions;
 
     int currentRound = 1;
