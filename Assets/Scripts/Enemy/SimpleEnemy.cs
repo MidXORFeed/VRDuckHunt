@@ -14,16 +14,24 @@ public class SimpleEnemy : MonoBehaviour
     {
         target = GameObject.FindGameObjectWithTag("Player").transform;
 
-        enemy = GetComponentInChildren<Animator>();
+        enemy = GetComponent<Animator>();
 
         agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
 
-        enemyHeath = Random.Range(2, enemyMaxHeath);
+        enemyHeath = Random.Range(1, enemyMaxHeath);
     }
 
     void Update()
-    {
-        agent.SetDestination(target.position);
+    {   
+        if (enemy.GetBool("Dead"))
+        {
+            agent.enabled = false;
+            Destroy(gameObject, 1.5f);
+        }
+        else
+        {
+            agent.SetDestination(target.position);
+        }
     }
 
     void OnCollisionEnter(Collision collision)
@@ -31,15 +39,16 @@ public class SimpleEnemy : MonoBehaviour
         if (collision.gameObject.tag == "Bullet")
         {
             Destroy(collision.gameObject);
-                
+
             if (enemyHeath != 0)
             {
+                enemy.SetTrigger("Hit");
+
                 enemyHeath = enemyHeath - 1;
-                enemy.Play("EnemyFlash");
 
                 if (enemyHeath == 0)
                 {
-                    Destroy(gameObject);
+                    enemy.SetBool("Dead", true);
                 }
             }
         }
