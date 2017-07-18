@@ -1,39 +1,33 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class MenuInteractions : MonoBehaviour {
 
     /* Miscellaneous */
-    public delegate void BackButtonDelegate();
-    public event BackButtonDelegate BackButtonEvent;
-
-    /* Single Player Menu */
-    public delegate void SinglePlayerButtonDelegate();
-    public delegate void NewGameButtonDelegate();
-    public delegate void WaveProgressionButtonDelegate();
-    public delegate void QuickShotButtonDelegate();
-    public delegate void TimeAttackButtonDelegate();
+    // public event Action BackButtonEvent if void delegate with no parameters
+    public event Func<IEnumerator> BackButtonEvent;
+    public event Action RestartButtonEvent;
     
-    public event SinglePlayerButtonDelegate SinglePlayerButtonEvent;
-    public event NewGameButtonDelegate NewGameButtonEvent;
-    public event WaveProgressionButtonDelegate WaveProgressionButtonEvent;
-    public event QuickShotButtonDelegate QuickShotButtonEvent;
-    public event TimeAttackButtonDelegate TimeAttackButtonEvent;
+    /* Single Player Menu */
+    public event Func<IEnumerator> NewGameButtonEvent;
+    public event Func<IEnumerator> WaveProgressionButtonEvent;
+    public event Func<IEnumerator> TimeAttackButtonEvent;
 
     public void BackButtonPressed()
     {
         if (BackButtonEvent != null)
         {
-            BackButtonEvent();
+            StartCoroutine(BackButtonEvent());
         }
     }
 
-    public void SinglePlayerButtonPressed()
+    public void RestartButtonPressed()
     {
-        if (SinglePlayerButtonEvent != null)
+        if (RestartButtonEvent != null)
         {
-            SinglePlayerButtonEvent();
+            RestartButtonEvent();
         }
     }
 
@@ -41,7 +35,7 @@ public class MenuInteractions : MonoBehaviour {
     {
         if (NewGameButtonEvent != null)
         {
-            NewGameButtonEvent();
+            StartCoroutine(NewGameButtonEvent());
         }
     }
 
@@ -49,15 +43,7 @@ public class MenuInteractions : MonoBehaviour {
     {
         if (WaveProgressionButtonEvent != null)
         {
-            WaveProgressionButtonEvent();
-        }
-    }
-
-    public void QuickShotButtonPressed()
-    {
-        if (QuickShotButtonEvent != null)
-        {
-            QuickShotButtonEvent();
+            StartCoroutine(WaveProgressionButtonEvent());
         }
     }
 
@@ -65,9 +51,7 @@ public class MenuInteractions : MonoBehaviour {
     {
         if (TimeAttackButtonEvent != null)
         {
-            TimeAttackButtonEvent();
+            StartCoroutine(TimeAttackButtonEvent());
         }
     }
-
-
 }
