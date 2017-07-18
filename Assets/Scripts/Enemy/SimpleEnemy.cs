@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class SimpleEnemy : MonoBehaviour
 {
     Transform target;
     Animator enemy;
-    UnityEngine.AI.NavMeshAgent agent;
+    NavMeshAgent agent;
     public int enemyMaxHeath = 4;
     int enemyHeath;
 
@@ -16,13 +17,13 @@ public class SimpleEnemy : MonoBehaviour
 
         enemy = GetComponent<Animator>();
 
-        agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
+        agent = GetComponent<NavMeshAgent>();
 
         enemyHeath = Random.Range(1, enemyMaxHeath);
     }
 
     void Update()
-    {   
+    {
         if (enemy.GetBool("Dead"))
         {
             agent.enabled = false;

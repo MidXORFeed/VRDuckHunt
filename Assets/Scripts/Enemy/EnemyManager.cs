@@ -5,19 +5,30 @@ using UnityEngine;
 public class EnemyManager : MonoBehaviour
 {
     public GameObject enemy;
+    public Transform spawnPoint;
+
+    public int enemyMaxCount = 10;
+    public static int enemyCount;
+
     public float spawnTime = 3f;
-    public Transform[] spawnPoints;
 
     void Start()
     {
+        enemyCount = 0;
         InvokeRepeating("Spawn", spawnTime, spawnTime);
     }
 
     void Spawn()
     {
-        int spawnPointIndex = Random.Range(0, spawnPoints.Length);
+        Quaternion spawnRandomRotation = Random.rotation;
 
-        Instantiate(enemy, spawnPoints[spawnPointIndex].position, spawnPoints[spawnPointIndex].rotation);
+        if (enemyCount != enemyMaxCount)
+        {
+            enemyCount += 1;
+
+            Instantiate(enemy, spawnPoint.position, spawnRandomRotation);
+        }
+
     }
 
 }
