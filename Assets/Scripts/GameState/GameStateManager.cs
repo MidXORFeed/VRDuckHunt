@@ -230,21 +230,37 @@ public class GameStateManager : MonoBehaviour {
         {
             gameStateStack.Push(GameState.RoundInProgress);
         }
+
         yield return null;
         // Play "Go!" audio clip?
         // Display N number of ducks to be spawned this wave
     }
 
+    
+
     IEnumerator RoundInProgressAction()
     {
         Debug.Log("Round " + currentRound + " In Progress State");
-        float roundInProgressTimerDuration = 5.0f;
-        float currentRoundInProgressTimer = roundInProgressTimerDuration;
+        float roundDuration = CalculateRoundDuration(currentRound);
+        int numEnemiesToSpawn = CalculateEnemySpawns(currentRound);
+        int numRemainingEnemies = numEnemiesToSpawn;
 
-        while (currentRoundInProgressTimer >= 0)
+        if (selectedGameMode == GameState.WaveProgression)
         {
-            currentRoundInProgressTimer -= Time.deltaTime;
-            yield return null;
+            while (roundDuration >= 0 || numRemainingEnemies > 0)
+            {
+                Debug.Log(roundDuration);
+                roundDuration -= Time.deltaTime;
+                yield return null;
+            }
+        }
+        else if (selectedGameMode == GameState.TimeAttack)
+        {
+            while (roundDuration >= 0)
+            {
+                roundDuration -= Time.deltaTime;
+                yield return null;
+            }
         }
 
         if (gameStateStack.Peek() != GameState.RoundCompleted)
@@ -358,6 +374,20 @@ public class GameStateManager : MonoBehaviour {
             Debug.Log("Scoreboard State");
         }
         yield return null;
+    }
+
+    float CalculateRoundDuration(int currentRound)
+    {
+        float baseRoundDuration = 15.0f;
+        float roundDurationMultiplier = 2.0f;
+        return (roundDurationMultiplier * currentRound) + baseRoundDuration;
+    }
+
+    int CalculateEnemySpawns(int currentRound)
+    {
+        int baseSpawn = 3;
+        int spawnMultiplier = (int) Math.Pow((currentRound * 1.0f), 2.0f);
+        return (baseSpawn + spawnMultiplier);
     }
 
 }
