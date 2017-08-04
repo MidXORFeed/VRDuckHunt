@@ -248,7 +248,7 @@ public class GameStateManager : MonoBehaviour {
 
         if (selectedGameMode == GameState.WaveProgression)
         {
-            while (roundDuration >= 0 || numRemainingEnemies > 0)
+            while (roundDuration >= 0 && numRemainingEnemies > 0)
             {
                 if (spawnInterval <= 0.0f)
                 {
@@ -258,13 +258,14 @@ public class GameStateManager : MonoBehaviour {
                         StartCoroutine(BurstSpawnEnemies(currentRound, numBurstSpawnEnemies));
                         numEnemiesToSpawn -= numBurstSpawnEnemies;
                         spawnInterval = CalculateSpawnInterval(currentRound);
+                        Debug.Log("Spawn Interval: " + spawnInterval);
                     }
                     
                 } else
                 {
                     spawnInterval -= Time.deltaTime;
                 }
-                Debug.Log(roundDuration);
+                // Debug.Log(roundDuration);
                 roundDuration -= Time.deltaTime;
                 yield return null;
             }
@@ -301,6 +302,7 @@ public class GameStateManager : MonoBehaviour {
                 currentRound++;
                 while (currentRoundCompletedTimer >= 0)
                 {
+                    Debug.Log("Going to next round in: " + currentRoundCompletedTimer);
                     currentRoundCompletedTimer -= Time.deltaTime;
                     yield return null;
                 }
@@ -396,7 +398,6 @@ public class GameStateManager : MonoBehaviour {
     {
         float baseSpawnCooldown = 3.0f - (currentRound * 0.3f);
         float calculatedSpawnCooldown = baseSpawnCooldown + UnityEngine.Random.Range(0, baseSpawnCooldown * 0.1f);
-
         while (numBurstSpawnEnemies > 0)
         {
             if (calculatedSpawnCooldown < 0.0f)
