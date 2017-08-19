@@ -230,21 +230,54 @@ public class GameStateManager : MonoBehaviour {
         {
             gameStateStack.Push(GameState.RoundInProgress);
         }
+
         yield return null;
         // Play "Go!" audio clip?
         // Display N number of ducks to be spawned this wave
     }
 
+    
+
     IEnumerator RoundInProgressAction()
     {
         Debug.Log("Round " + currentRound + " In Progress State");
-        float roundInProgressTimerDuration = 5.0f;
-        float currentRoundInProgressTimer = roundInProgressTimerDuration;
+        float roundDuration = CalculateRoundDuration(currentRound);
+        int numEnemiesToSpawn = CalculateEnemySpawns(currentRound);
+        int numRemainingEnemies = numEnemiesToSpawn;
+        float spawnInterval = CalculateSpawnInterval(currentRound);
 
-        while (currentRoundInProgressTimer >= 0)
+        if (selectedGameMode == GameState.WaveProgression)
         {
-            currentRoundInProgressTimer -= Time.deltaTime;
-            yield return null;
+            while (roundDuration >= 0 && numRemainingEnemies > 0)
+            {
+                if (spawnInterval <= 0.0f)
+                {
+                    if (numEnemiesToSpawn > 0)
+                    {
+                        int numBurstSpawnEnemies = CalculateBurstEnemySpawns(currentRound, numEnemiesToSpawn);
+                        StartCoroutine(BurstSpawnEnemies(currentRound, numBurstSpawnEnemies));
+                        numEnemiesToSpawn -= numBurstSpawnEnemies;
+                        spawnInterval = CalculateSpawnInterval(currentRound);
+                        Debug.Log("Spawn Interval: " + spawnInterval);
+                    }
+                    
+                } else
+                {
+                    spawnInterval -= Time.deltaTime;
+                }
+                // Debug.Log(roundDuration);
+                roundDuration -= Time.deltaTime;
+                yield return null;
+            }
+        }
+        else if (selectedGameMode == GameState.TimeAttack)
+        {
+            while (roundDuration >= 0 || numRemainingEnemies > 0)
+            {
+                Debug.Log(roundDuration);
+                roundDuration -= Time.deltaTime;
+                yield return null;
+            }
         }
 
         if (gameStateStack.Peek() != GameState.RoundCompleted)
@@ -269,6 +302,7 @@ public class GameStateManager : MonoBehaviour {
                 currentRound++;
                 while (currentRoundCompletedTimer >= 0)
                 {
+                    Debug.Log("Going to next round in: " + currentRoundCompletedTimer);
                     currentRoundCompletedTimer -= Time.deltaTime;
                     yield return null;
                 }
@@ -358,6 +392,58 @@ public class GameStateManager : MonoBehaviour {
             Debug.Log("Scoreboard State");
         }
         yield return null;
+    }
+
+    IEnumerator BurstSpawnEnemies(int currentRound, int numBurstSpawnEnemies)
+    {
+        float baseSpawnCooldown = 3.0f - (currentRound * 0.3f);
+        float calculatedSpawnCooldown = baseSpawnCooldown + UnityEngine.Random.Range(0, baseSpawnCooldown * 0.1f);
+        while (numBurstSpawnEnemies > 0)
+        {
+            if (calculatedSpawnCooldown < 0.0f)
+            {
+                // Need to know the array of spawning locations
+                // Instantiate(enemyToSpawn, whereToSpawn);
+                numBurstSpawnEnemies--;
+                calculatedSpawnCooldown = baseSpawnCooldown + UnityEngine.Random.Range(0, baseSpawnCooldown * 0.1f);
+            }
+            else
+            {
+                calculatedSpawnCooldown -= Time.deltaTime;
+            }
+            yield return null;
+        }
+    }
+
+    float CalculateRoundDuration(int currentRound)
+    {
+        float baseRoundDuration = 15.0f;
+        float roundDurationMultiplier = 2.0f;
+        return (roundDurationMultiplier * currentRound) + baseRoundDuration;
+    }
+
+    int CalculateEnemySpawns(int currentRound)
+    {
+        int baseSpawn = 3;
+        int spawnMultiplier = (int) Math.Pow((currentRound * 1.0f), 2.0f);
+        return (baseSpawn + spawnMultiplier);
+    }
+
+    int CalculateBurstEnemySpawns(int currentRound, int numEnemiesToSpawn)
+    {
+        int numBurstSpawn = currentRound;
+        if (numBurstSpawn > numEnemiesToSpawn)
+        {
+            numBurstSpawn = numEnemiesToSpawn;
+        }
+        return numBurstSpawn;
+    }
+
+    float CalculateSpawnInterval(int currentRound)
+    {
+        float baseCooldown = 5.0f / currentRound;
+        float cooldownDeviation = UnityEngine.Random.Range(0, baseCooldown * 0.1f);
+        return baseCooldown + cooldownDeviation;
     }
 
 }
