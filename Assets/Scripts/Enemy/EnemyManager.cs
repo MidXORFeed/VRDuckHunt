@@ -26,7 +26,7 @@ public class EnemyManager : MonoBehaviour
         {
             enemyCount += 1;
 
-            Instantiate(enemy, spawnPoint.position, spawnRandomRotation);
+            Instantiate(enemy, spawnPoint.position, spawnPoint.rotation);
         }
 
     }

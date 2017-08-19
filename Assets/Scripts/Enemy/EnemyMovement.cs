@@ -31,9 +31,14 @@ public class EnemyMovement : MonoBehaviour
         Move();
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log(other.gameObject.name);
+    }
+
     void Target()
     {
-        //enemyLifeTime += Time.deltaTime;
+        enemyLifeTime += Time.deltaTime;
         if (enemyLifeTime >= enemyMaxLifeTime)
         {
             target = exit;
