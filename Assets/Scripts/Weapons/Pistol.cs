@@ -185,8 +185,14 @@ public class Pistol : VRTK_InteractableObject
             FindObjectsOfType<Magazine>()[i].detachEvent += OnMagazineDetach;
             FindObjectsOfType<Magazine>()[i].attachEvent += OnMagazineAttach;
         }
-        FindObjectOfType<PistolSlide>().chamberBulletEvent += ChamberBullet;
-        FindObjectOfType<PistolSlide>().unchamberBulletEvent += UnchamberBullet;
+        // FindObjectOfType<PistolSlide>().chamberBulletEvent += ChamberBullet;
+        // FindObjectOfType<PistolSlide>().unchamberBulletEvent += UnchamberBullet;
+        if (slide)
+        {
+            slide.chamberBulletEvent += ChamberBullet;
+            slide.unchamberBulletEvent += UnchamberBullet;
+        }
+
     }
 
     protected override void Awake()

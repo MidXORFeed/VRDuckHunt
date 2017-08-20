@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class SliderAnimation : MonoBehaviour {
 
+    public string animationClipName;
     public Animation animation;
 
     public void SetFrame(float frame)
     {
-        animation["SliderPullAnimation"].speed = 0;
-        animation["SliderPullAnimation"].time = frame;
-        animation.Play("SliderPullAnimation");
+        animation[animationClipName].speed = 0;
+        animation[animationClipName].time = frame;
+        animation.Play(animationClipName);
     }
 }
