@@ -5,7 +5,7 @@ using Valve.VR.InteractionSystem;
 using VRTK;
 using VRTK.Examples;
 
-public class Pistol : VRTK_InteractableObject
+public class Pistol : Gun
 {
     public Rigidbody bullet;
     public float bulletForce;
