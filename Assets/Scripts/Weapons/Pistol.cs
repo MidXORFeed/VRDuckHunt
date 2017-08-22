@@ -19,8 +19,7 @@ public class Pistol : Gun
     public Transform maxTriggerTransform;
     public Transform bulletSpawn;
     public Transform caseSpawn;
-    private Rigidbody slideRigidbody;
-    private Collider slideCollider;
+    
     private VRTK_ControllerEvents controllerEvents;
     private bool tMagazineEventHeard;
     private Magazine equippedMagazine;
@@ -78,29 +77,13 @@ public class Pistol : Gun
         }
     }
 
-    private void ToggleCollision(Rigidbody objRB, Collider objCol, bool state)
-    {
-        objRB.isKinematic = state;
-        objCol.isTrigger = state;
-    }
-
-    private void ToggleSlide(bool state)
-    {
-        if (!state)
-        {
-            slide.ForceStopInteracting();
-        }
-        slide.isGrabbable = state;
-        ToggleCollision(slideRigidbody, slideCollider, state);
-    }
-
     public override void Grabbed(GameObject currentGrabbingObject)
     {
         base.Grabbed(currentGrabbingObject);
 
         controllerEvents = currentGrabbingObject.GetComponent<VRTK_ControllerEvents>();
 
-        ToggleSlide(true);
+        slide.ToggleSlide(true);
 
         //Limit hands grabbing when picked up
         if (VRTK_DeviceFinder.GetControllerHand(currentGrabbingObject) == SDK_BaseController.ControllerHand.Left)
@@ -121,7 +104,7 @@ public class Pistol : Gun
     {
         base.Ungrabbed(previousGrabbingObject);
 
-        ToggleSlide(false);
+        slide.ToggleSlide(false);
 
         //Unlimit hands
         allowedTouchControllers = AllowedController.Both;
@@ -201,8 +184,7 @@ public class Pistol : Gun
 
         if (slide)
         {
-            slideRigidbody = slide.GetComponent<Rigidbody>();
-            slideCollider = slide.GetComponent<Collider>();
+            
         }
     }
 

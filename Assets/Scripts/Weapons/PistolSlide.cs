@@ -31,6 +31,8 @@
         private float SlideBackSpeed = 0.166f;
         private float SlideForthSpeed = 0.4f;
         private float SlideHack = 100000.0f;
+        private Rigidbody slideRigidbody;
+        private Collider slideCollider;
 
         private SliderAnimation sliderAnimation;
         private float previousPull;
@@ -186,6 +188,22 @@
             bullet.SetActive(isBulletChambered);
         }
 
+        public void ToggleSlide(bool state)
+        {
+            if (!state)
+            {
+                ForceStopInteracting();
+            }
+            isGrabbable = state;
+            ToggleCollision(slideRigidbody, slideCollider, state);
+        }
+
+        private void ToggleCollision(Rigidbody objRB, Collider objCol, bool state)
+        {
+            objRB.isKinematic = state;
+            objCol.isTrigger = state;
+        }
+
         void Start()
         {
             slideState = SlideState.NoAction;
@@ -197,7 +215,9 @@
         protected override void Awake()
         {
             base.Awake();
-            
+            slideRigidbody = GetComponent<Rigidbody>();
+            slideCollider = GetComponent<Collider>();
+
         }
 
         protected override void Update()
