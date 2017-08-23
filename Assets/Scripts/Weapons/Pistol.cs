@@ -181,11 +181,6 @@ public class Pistol : Gun
     protected override void Awake()
     {
         base.Awake();
-
-        if (slide)
-        {
-            
-        }
     }
 
     protected override void Update()
