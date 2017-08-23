@@ -20,8 +20,7 @@ public class EnemyMovement : MonoBehaviour
 
     void Start()
     {
-        targetPlayer = GameObject.Find("Target").transform;
-        exit = GameObject.Find("Exit").transform;
+
     }
 
     void Update()
