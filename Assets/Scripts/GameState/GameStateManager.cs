@@ -8,6 +8,7 @@ public class GameStateManager : MonoBehaviour {
     public GameObject enemyToSpawn;
     public MenuInteractions menuInteractions;
 
+
     int currentRound = 1;
     int MAX_ROUNDS = 3;
     bool isMenuStateCoroutineRunning;
