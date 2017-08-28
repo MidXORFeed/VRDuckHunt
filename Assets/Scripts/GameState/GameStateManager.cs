@@ -7,6 +7,7 @@ public class GameStateManager : MonoBehaviour {
 
     public GameObject enemyToSpawn;
     public MenuInteractions menuInteractions;
+    public event Action SpawnEvent;
 
 
     int currentRound = 1;
@@ -39,6 +40,14 @@ public class GameStateManager : MonoBehaviour {
         Graphics,
         Audio,
         Scoreboard
+    }
+
+    void EmitSpawnEnemy()
+    {
+        if (SpawnEvent != null)
+        {     
+            SpawnEvent();
+        }
     }
 
     // Use this for initialization
@@ -404,7 +413,7 @@ public class GameStateManager : MonoBehaviour {
             if (calculatedSpawnCooldown < 0.0f)
             {
                 // Need to know the array of spawning locations
-                // Instantiate(enemyToSpawn, whereToSpawn);
+                EmitSpawnEnemy();
                 numBurstSpawnEnemies--;
                 calculatedSpawnCooldown = baseSpawnCooldown + UnityEngine.Random.Range(0, baseSpawnCooldown * 0.1f);
             }
