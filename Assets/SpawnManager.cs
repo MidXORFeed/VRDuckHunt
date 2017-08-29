@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -28,20 +29,24 @@ public class SpawnManager : MonoBehaviour {
         Vector3 randomSpawnVolumePosition = GetRandomPositionInVolume(randomSpawnVolume);
         Vector3 randomExitVolumePosition = GetRandomPositionInVolume(randomExitVolume);
         Rigidbody duckClone = (Rigidbody) Instantiate(duck, randomSpawnVolumePosition, duck.rotation);
-        duckClone.GetComponent<EnemyMovement>().targetPlayer = randomExitVolume.transform;
-        duckClone.GetComponent<EnemyMovement>().exit = randomExitVolume.transform;
+        duckClone.GetComponent<DuckBehavior>().targetPlayer = randomExitVolume.transform;
+        duckClone.GetComponent<DuckBehavior>().exit = randomExitVolume.transform;
+        duckClone.GetComponent<DuckBehavior>().DeathEvent += ADuckHasDiedAction;
+    }
 
-        Debug.Log("Duck Spawned at: " + "Random Point" + randomSpawnVolumePosition);
+    private void ADuckHasDiedAction()
+    {
+        gameStateManager.numRemainingEnemies -= 1;
     }
 
     private GameObject GetRandomSpawnVolume()
     {
-        return spawnVolumes[Random.Range(0, spawnVolumes.Length)];
+        return spawnVolumes[UnityEngine.Random.Range(0, spawnVolumes.Length)];
     }
 
     private GameObject GetRandomExitVolume()
     {
-        return exitVolumes[Random.Range(0, exitVolumes.Length)];
+        return exitVolumes[UnityEngine.Random.Range(0, exitVolumes.Length)];
     }
 
     private Vector3 GetRandomPositionInVolume(GameObject volume)
@@ -52,6 +57,6 @@ public class SpawnManager : MonoBehaviour {
         float volumeYRangeMax = volume.transform.position.y + (0.5f * volume.transform.lossyScale.y);
         float volumeZRangeMin = volume.transform.position.z - (0.5f * volume.transform.lossyScale.z);
         float volumeZRangeMax = volume.transform.position.z + (0.5f * volume.transform.lossyScale.z);
-        return new Vector3(Random.Range(volumeXRangeMin, volumeXRangeMax), Random.Range(volumeYRangeMin, volumeYRangeMax), Random.Range(volumeZRangeMin, volumeZRangeMax));
+        return new Vector3(UnityEngine.Random.Range(volumeXRangeMin, volumeXRangeMax), UnityEngine.Random.Range(volumeYRangeMin, volumeYRangeMax), UnityEngine.Random.Range(volumeZRangeMin, volumeZRangeMax));
     }
 }

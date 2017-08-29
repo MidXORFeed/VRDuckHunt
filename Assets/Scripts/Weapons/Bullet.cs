@@ -5,6 +5,7 @@ using Valve.VR.InteractionSystem;
 
 public class Bullet : MonoBehaviour {
 
+    public float attackDamage;
     public SoundPlayOneshot playOneShot;
     public float timeToDie;
 

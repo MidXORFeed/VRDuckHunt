@@ -8,7 +8,7 @@ public class GameStateManager : MonoBehaviour {
     public GameObject enemyToSpawn;
     public MenuInteractions menuInteractions;
     public event Action SpawnEvent;
-
+    public int numRemainingEnemies;
 
     int currentRound = 1;
     int MAX_ROUNDS = 3;
@@ -253,7 +253,7 @@ public class GameStateManager : MonoBehaviour {
         Debug.Log("Round " + currentRound + " In Progress State");
         float roundDuration = CalculateRoundDuration(currentRound);
         int numEnemiesToSpawn = CalculateEnemySpawns(currentRound);
-        int numRemainingEnemies = numEnemiesToSpawn;
+        numRemainingEnemies = numEnemiesToSpawn;
         float spawnInterval = CalculateSpawnInterval(currentRound);
 
         if (selectedGameMode == GameState.WaveProgression)

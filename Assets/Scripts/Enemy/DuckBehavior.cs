@@ -1,26 +1,47 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyMovement : MonoBehaviour
+public class DuckBehavior : MonoBehaviour
 {
-    private Transform target;
+    public event Action DeathEvent;
+    public float maxHealth;
+    public float currentHealth;
+
     public Transform targetPlayer;
     public Transform exit;
-
     public float enemyMaxLifeTime = 30f;
     public float enemyLifeTime = 0;
-
     public float movementSpeed = 10f;
     public float rotationDamping = 1f;
-
     public float raycastOffset = 1f;
     public float raycastDistance = 10f;
     public float raycastDamping = 100f;
 
+    private Transform target;
+    private DuckState currentState;
+
+    private enum DuckState
+    {
+        Flying,
+        Falling,
+        Sinking,
+        Dead
+    }
+
+    public void DeathAction()
+    {
+        if (DeathEvent != null)
+        {
+            DeathEvent();
+        }
+    }
+
     void Start()
     {
-
+        currentHealth = maxHealth;
+        currentState = DuckState.Flying;
     }
 
     void Update()
@@ -30,9 +51,16 @@ public class EnemyMovement : MonoBehaviour
         Move();
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log(other.gameObject.name);
+        if (collision.gameObject.tag == "Bullet" && collision.gameObject.GetComponent<Bullet>() != null)
+        {
+            if ((currentHealth -= collision.gameObject.GetComponent<Bullet>().attackDamage) <= 0.0f)
+            {
+                currentHealth = 0.0f;
+                currentState = DuckState.Falling;
+            }
+        }
     }
 
     void Target()
