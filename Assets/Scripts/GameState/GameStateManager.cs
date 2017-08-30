@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class GameStateManager : MonoBehaviour {
 
-    public GameObject enemyToSpawn;
     public MenuInteractions menuInteractions;
     public event Action SpawnEvent;
     public int numRemainingEnemies;
@@ -289,6 +288,9 @@ public class GameStateManager : MonoBehaviour {
                 yield return null;
             }
         }
+
+        numRemainingEnemies = 0;
+        numEnemiesToSpawn = 0;
 
         if (gameStateStack.Peek() != GameState.RoundCompleted)
         {
