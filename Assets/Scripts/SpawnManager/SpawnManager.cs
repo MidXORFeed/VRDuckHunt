@@ -31,10 +31,10 @@ public class SpawnManager : MonoBehaviour {
         Rigidbody duckClone = (Rigidbody) Instantiate(duck, randomSpawnVolumePosition, duck.rotation);
         duckClone.GetComponent<DuckBehavior>().targetPlayer = randomExitVolume.transform;
         duckClone.GetComponent<DuckBehavior>().exit = randomExitVolume.transform;
-        duckClone.GetComponent<DuckBehavior>().DeathEvent += ADuckHasDiedAction;
+        duckClone.GetComponent<DuckBehavior>().DeathEvent += ADuckHasBeenKilledAction;
     }
 
-    private void ADuckHasDiedAction()
+    private void ADuckHasBeenKilledAction()
     {
         gameStateManager.numRemainingEnemies -= 1;
     }

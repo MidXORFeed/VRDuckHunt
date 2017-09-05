@@ -1,0 +1,206 @@
+{
+  "easy": [
+    {
+      "level": 1,
+      "enemySpawns": 1,
+      "roundDuration": 15
+    },
+    {
+      "level": 2,
+      "enemySpawns": 1,
+      "roundDuration": 15
+    },
+    {
+      "level": 3,
+      "enemySpawns": 2,
+      "roundDuration": 20
+    },
+    {
+      "level": 4,
+      "enemySpawns": 3,
+      "roundDuration": 25
+    },
+    {
+      "level": 5,
+      "enemySpawns": 4,
+      "roundDuration": 30
+    },
+    {
+      "level": 6,
+      "enemySpawns": 4,
+      "roundDuration": 30
+    },
+    {
+      "level": 7,
+      "enemySpawns": 4,
+      "roundDuration": 30
+    },
+    {
+      "level": 8,
+      "enemySpawns": 5,
+      "roundDuration": 35
+    },
+    {
+      "level": 9,
+      "enemySpawns": 6,
+      "roundDuration": 40
+    },
+    {
+      "level": 10,
+      "enemySpawns": 7,
+      "roundDuration": 45
+    },
+    {
+      "level": 11,
+      "enemySpawns": 8,
+      "roundDuration": 50
+    },
+    {
+      "level": 12,
+      "enemySpawns": 8,
+      "roundDuration": 50
+    },
+    {
+      "level": 13,
+      "enemySpawns": 10,
+      "roundDuration": 60
+    },
+    {
+      "level": 14,
+      "enemySpawns": 10,
+      "roundDuration": 60
+    },
+    {
+      "level": 15,
+      "enemySpawns": 13,
+      "roundDuration": 75
+    },
+    {
+      "level": 16,
+      "enemySpawns": 13,
+      "roundDuration": 75
+    },
+    {
+      "level": 17,
+      "enemySpawns": 15,
+      "roundDuration": 85
+    },
+    {
+      "level": 18,
+      "enemySpawns": 18,
+      "roundDuration": 100
+    },
+    {
+      "level": 19,
+      "enemySpawns": 18,
+      "roundDuration": 100
+    },
+    {
+      "level": 20,
+      "enemySpawns": 18,
+      "roundDuration": 100
+    }
+  ],
+  "normal": [
+    {
+      "level": 1,
+      "enemySpawns": 3,
+      "roundDuration": 25
+    },
+    {
+      "level": 2,
+      "enemySpawns": 4,
+      "roundDuration": 30
+    },
+    {
+      "level": 3,
+      "enemySpawns": 6,
+      "roundDuration": 40
+    },
+    {
+      "level": 4,
+      "enemySpawns": 9,
+      "roundDuration": 55
+    },
+    {
+      "level": 5,
+      "enemySpawns": 12,
+      "roundDuration": 70
+    },
+    {
+      "level": 6,
+      "enemySpawns": 16,
+      "roundDuration": 90
+    },
+    {
+      "level": 7,
+      "enemySpawns": 12,
+      "roundDuration": 70
+    },
+    {
+      "level": 8,
+      "enemySpawns": 15,
+      "roundDuration": 85
+    },
+    {
+      "level": 9,
+      "enemySpawns": 16,
+      "roundDuration": 90
+    },
+    {
+      "level": 10,
+      "enemySpawns": 28,
+      "roundDuration": 150
+    },
+    {
+      "level": 11,
+      "enemySpawns": 32,
+      "roundDuration": 170
+    },
+    {
+      "level": 12,
+      "enemySpawns": 24,
+      "roundDuration": 130
+    },
+    {
+      "level": 13,
+      "enemySpawns": 30,
+      "roundDuration": 160
+    },
+    {
+      "level": 14,
+      "enemySpawns": 30,
+      "roundDuration": 160
+    },
+    {
+      "level": 15,
+      "enemySpawns": 39,
+      "roundDuration": 205
+    },
+    {
+      "level": 16,
+      "enemySpawns": 39,
+      "roundDuration": 205
+    },
+    {
+      "level": 17,
+      "enemySpawns": 45,
+      "roundDuration": 235
+    },
+    {
+      "level": 18,
+      "enemySpawns": 54,
+      "roundDuration": 280
+    },
+    {
+      "level": 19,
+      "enemySpawns": 72,
+      "roundDuration": 370
+    },
+    {
+      "level": 20,
+      "enemySpawns": 72,
+      "roundDuration": 370
+    }
+  ]
+}
