@@ -492,8 +492,7 @@ public class GameStateManager : MonoBehaviour {
     float CalculateSpawnInterval(int currentRound)
     {
         float baseCooldown = 5.0f / currentRound;
-        float cooldownDeviation = UnityEngine.Random.Range(0, baseCooldown * 0.1f);
+        float cooldownDeviation = UnityEngine.Random.Range(0, ((float)(MAX_ROUNDS - currentRound) / MAX_ROUNDS) + (5.0f / currentRound));
         return baseCooldown + cooldownDeviation;
     }
-
 }
