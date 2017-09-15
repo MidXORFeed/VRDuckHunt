@@ -51,16 +51,24 @@ public class DuckBehavior : MonoBehaviour
         Move();
     }
 
-    private void OnCollisionEnter(Collision collision)
+    void OnCollisionEnter(Collision collision)
     {
+        // May have to write a new collision method for detecting bullets which
+        // involves drawing a line between the bullet from the previous frame 
+        // and current frame and check if the line intersects the duck
         if (collision.gameObject.tag == "Bullet" && collision.gameObject.GetComponent<Bullet>() != null)
         {
-            if ((currentHealth -= collision.gameObject.GetComponent<Bullet>().attackDamage) <= 0.0f)
-            {
-                currentHealth = 0.0f;
-                currentState = DuckState.Falling;
-                DeathAction();
-            }
+            TakeDamage(collision.gameObject.GetComponent<Bullet>().attackDamage);
+        }
+    }
+
+    void TakeDamage(float damageValue)
+    {
+        if ((currentHealth -= damageValue) <= 0.0f)
+        {
+            currentHealth = 0.0f;
+            currentState = DuckState.Falling;
+            DeathAction();
         }
     }
 
