@@ -24,12 +24,12 @@ GameObject:
   - component: {fileID: 95924856957067068}
   - component: {fileID: 136645779362064358}
   - component: {fileID: 54380714835943830}
-  - component: {fileID: 114866905558172976}
+  - component: {fileID: 114958866212809720}
   - component: {fileID: 114159926202720012}
   - component: {fileID: 82290929748277634}
   - component: {fileID: 120139283713595562}
   m_Layer: 0
-  m_Name: 9mm
+  m_Name: 9mmCasing
   m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -42,7 +42,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1434458780036544}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.47706333, y: 1.3155183, z: 1.4750147}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -220,7 +220,7 @@ MonoBehaviour:
   pitchMin: 0.7
   pitchMax: 1
   playOnAwake: 0
---- !u!114 &114866905558172976
+--- !u!114 &114958866212809720
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -228,10 +228,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1434458780036544}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 117851170459c254d9b6c353d25de7c9, type: 3}
+  m_Script: {fileID: 11500000, guid: f49a5d1ab7e4ff24a9094e3522bc7b17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackDamage: 120
   playOneShot: {fileID: 114159926202720012}
   timeToDie: 5
 --- !u!120 &120139283713595562

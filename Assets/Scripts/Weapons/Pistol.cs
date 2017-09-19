@@ -8,6 +8,7 @@ using VRTK.Examples;
 public class Pistol : Gun
 {
     public Rigidbody bullet;
+    public Rigidbody bulletCasing;
     public float bulletForce;
     public float caseEjectionForceMin;
     public float caseEjectionForceMax;
@@ -52,10 +53,10 @@ public class Pistol : Gun
         if (slide.isBulletChambered)
         {
             slide.isBulletChambered = false;
-            Rigidbody bulletClone = (Rigidbody)Instantiate(bullet, caseSpawn.position, caseSpawn.rotation);
-            bulletClone.AddForce((caseSpawn.forward * caseForwardEjectionForce) + (caseSpawn.right * caseRightEjectionForce), ForceMode.Impulse);
-            bulletClone.rotation = Random.rotation;
-            bulletClone.GetComponent<Rigidbody>().AddTorque(randomTorque);
+            Rigidbody bulletCasingClone = (Rigidbody)Instantiate(bulletCasing, caseSpawn.position, caseSpawn.rotation);
+            bulletCasingClone.AddForce((caseSpawn.forward * caseForwardEjectionForce) + (caseSpawn.right * caseRightEjectionForce), ForceMode.Impulse);
+            bulletCasingClone.rotation = Random.rotation;
+            bulletCasingClone.GetComponent<Rigidbody>().AddTorque(randomTorque);
         }
     }
 

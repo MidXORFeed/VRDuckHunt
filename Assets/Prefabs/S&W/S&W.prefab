@@ -1745,7 +1745,9 @@ MonoBehaviour:
   allowedUseControllers: 0
   usingState: 0
   bullet: {fileID: 54380714835943830, guid: 8b95123a4aa255b439965399d5f3cd90, type: 2}
-  bulletForce: 5
+  bulletCasing: {fileID: 54380714835943830, guid: e4362174fc3544d4490d9a64523eaaa5,
+    type: 2}
+  bulletForce: 3
   caseEjectionForceMin: 0
   caseEjectionForceMax: 0.2
   caseEjectionTorqueForce: 5

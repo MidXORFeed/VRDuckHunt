@@ -5,16 +5,23 @@ using UnityEngine;
 
 public class GameStateManager : MonoBehaviour {
 
+    public event Action SpawnEvent;
+    public event Action<int> SendNumEnemiesToSpawnEvent;
+    public event Action<int> SendCurrentRoundEvent;
+    public event Action<float> SendRoundDurationEvent;
+    public event Action<string> SendCurrentGameStateEvent;
+    
+
     public ResourceDeserializer resourceDeserializer;
     public MenuInteractions menuInteractions;
-    public event Action SpawnEvent;
+    
     public int numRemainingEnemies;
 
     GameDifficulty selectedGameDifficulty = GameDifficulty.Easy;
     string levelDataPath = "Level/leveldata";
     LevelCollection levelData;
     int currentRound = 1;
-    int MAX_ROUNDS = 3;
+    int MAX_ROUNDS;
     bool isMenuStateCoroutineRunning;
     bool isGameStateCoroutineRunning;
     GameState selectedGameMode;
@@ -61,6 +68,38 @@ public class GameStateManager : MonoBehaviour {
         }
     }
 
+    void EmitNumEnemiesToSpawn(int numEnemiesToSpawn)
+    {
+        if (SendNumEnemiesToSpawnEvent != null)
+        {
+            SendNumEnemiesToSpawnEvent(numEnemiesToSpawn);
+        }
+    }
+
+    void EmitCurrentRound(int currentRound)
+    {
+        if (SendCurrentRoundEvent != null)
+        {
+            SendCurrentRoundEvent(currentRound);
+        }
+    }
+
+    void EmitRoundDuration(float roundDuration)
+    {
+        if (SendRoundDurationEvent != null)
+        {
+            SendRoundDurationEvent(roundDuration);
+        }
+    }
+
+    void EmitCurrentGameStateEvent(GameState currentGameState)
+    {
+        if (SendCurrentGameStateEvent != null)
+        {
+            SendCurrentGameStateEvent(currentGameState.ToString());
+        }
+    }
+    
     // Use this for initialization
     void Start () {
         gameStateStack = new Stack<GameState>();
@@ -175,8 +214,8 @@ public class GameStateManager : MonoBehaviour {
         if (gameStateStack.Peek() != GameState.Pregame)
         {
             gameStateStack.Push(GameState.Pregame);
-            Debug.Log("Pregame State");
         }
+        EmitCurrentGameStateEvent(currentGameState);
         yield return null;
         // No game mode currently selected
         // User is free to interact with their environment without points
@@ -189,7 +228,7 @@ public class GameStateManager : MonoBehaviour {
         {
             gameStateStack.Push(GameState.NewGame);
         }
-        Debug.Log("NewGame State");
+        EmitCurrentGameStateEvent(currentGameState);
         yield return null;
     }
 
@@ -199,9 +238,10 @@ public class GameStateManager : MonoBehaviour {
         {
             gameStateStack.Push(GameState.WaveProgression);
         }
+        EmitCurrentGameStateEvent(currentGameState);
 
-        Debug.Log("WaveProgression State");
         selectedGameMode = GameState.WaveProgression;
+        MAX_ROUNDS = GetMaxRounds();
         
         if (gameStateStack.Peek() != GameState.RoundStarting)
         {
@@ -233,7 +273,7 @@ public class GameStateManager : MonoBehaviour {
 
     IEnumerator RoundStartingAction()
     {
-        Debug.Log("Round " + currentRound + " Starting State");
+        EmitCurrentGameStateEvent(currentGameState);
         float preroundTimerDuration = 3.0f;
         float currentPreroundTimer = preroundTimerDuration;
 
@@ -251,7 +291,7 @@ public class GameStateManager : MonoBehaviour {
 
     IEnumerator RoundStartedAction()
     {
-        Debug.Log("Round " + currentRound + " Started State");
+        
         if (gameStateStack.Peek() != GameState.RoundInProgress)
         {
             gameStateStack.Push(GameState.RoundInProgress);
@@ -262,15 +302,17 @@ public class GameStateManager : MonoBehaviour {
         // Display N number of ducks to be spawned this wave
     }
 
-    
-
     IEnumerator RoundInProgressAction()
     {
-        Debug.Log("Round " + currentRound + " In Progress State");
         float roundDuration = GetRoundDuration(currentRound);
         int numEnemiesToSpawn = GetEnemySpawns(currentRound);
         numRemainingEnemies = numEnemiesToSpawn;
         float spawnInterval = CalculateSpawnInterval(currentRound);
+
+        EmitCurrentGameStateEvent(currentGameState);
+        EmitNumEnemiesToSpawn(numEnemiesToSpawn);
+        EmitCurrentRound(currentRound);
+        EmitRoundDuration(roundDuration);
 
         if (selectedGameMode == GameState.WaveProgression)
         {
@@ -453,11 +495,11 @@ public class GameStateManager : MonoBehaviour {
             case GameDifficulty.Normal:
                 return levelData.normal[currentRound - 1].roundDuration;
             case GameDifficulty.Hard:
-                return levelData.easy[currentRound - 1].roundDuration;
+                return levelData.normal[currentRound - 1].roundDuration;
             case GameDifficulty.Extreme:
-                return levelData.easy[currentRound - 1].roundDuration;
+                return levelData.normal[currentRound - 1].roundDuration;
             default:
-                return levelData.easy[currentRound - 1].roundDuration;
+                return levelData.normal[currentRound - 1].roundDuration;
         }
     }
 
@@ -470,13 +512,29 @@ public class GameStateManager : MonoBehaviour {
             case GameDifficulty.Normal:
                 return levelData.normal[currentRound - 1].enemySpawns;
             case GameDifficulty.Hard:
-                return levelData.easy[currentRound - 1].enemySpawns;
+                return levelData.normal[currentRound - 1].enemySpawns;
             case GameDifficulty.Extreme:
-                return levelData.easy[currentRound - 1].enemySpawns;
+                return levelData.normal[currentRound - 1].enemySpawns;
             default:
-                return levelData.easy[currentRound - 1].enemySpawns;
+                return levelData.normal[currentRound - 1].enemySpawns;
         }
-        
+    }
+
+    int GetMaxRounds()
+    {
+        switch (selectedGameDifficulty)
+        {
+            case GameDifficulty.Easy:
+                return levelData.easy.Count;
+            case GameDifficulty.Normal:
+                return levelData.normal.Count;
+            case GameDifficulty.Hard:
+                return levelData.normal.Count;
+            case GameDifficulty.Extreme:
+                return levelData.normal.Count;
+            default:
+                return levelData.normal.Count;
+        }
     }
 
     int CalculateBurstEnemySpawns(int currentRound, int numEnemiesToSpawn)
