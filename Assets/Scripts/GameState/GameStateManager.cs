@@ -276,6 +276,7 @@ public class GameStateManager : MonoBehaviour {
         EmitCurrentGameStateEvent(currentGameState);
         float preroundTimerDuration = 3.0f;
         float currentPreroundTimer = preroundTimerDuration;
+        EmitRoundDuration(currentPreroundTimer);
 
         while (currentPreroundTimer >= 0)
         {
@@ -363,11 +364,12 @@ public class GameStateManager : MonoBehaviour {
 
     IEnumerator RoundCompletedAction()
     {
-        Debug.Log("Round " + currentRound + " Completed State");
+        EmitCurrentGameStateEvent(currentGameState);
         if (selectedGameMode == GameState.WaveProgression)
         {
             float roundCompletedTimerDuration = 5.0f;
             float currentRoundCompletedTimer = roundCompletedTimerDuration;
+            EmitRoundDuration(currentRoundCompletedTimer);
             if (currentRound < MAX_ROUNDS)
             {
                 currentRound++;
@@ -402,8 +404,8 @@ public class GameStateManager : MonoBehaviour {
 
     IEnumerator PostGameAction()
     {
-        Debug.Log("Postgame State");
-        
+        EmitCurrentGameStateEvent(currentGameState);
+
         // Offer method of restarting game
         // Display restart button somewhere?
         // Pressing restart button should transition state back to RoundStarting

@@ -69,7 +69,9 @@ public class DuckBehavior : MonoBehaviour
             currentHealth = 0.0f;
             currentState = DuckState.Falling;
             DeathAction();
+            GetComponentInChildren<SkinnedMeshRenderer>().enabled = false;
         }
+        
     }
 
     void Target()

@@ -7,8 +7,10 @@ using VRTK;
 public class UIManager : MonoBehaviour {
 
     public GameStateManager gameStateManager;
-    private InputField[] inputFields;
+    public SpawnManager spawnManager;
+    public InputField[] inputFields;
     float currentRoundTime;
+    int numEnemiesLeftThisRound;
 
     // Use this for initialization
     void Start () {
@@ -16,12 +18,22 @@ public class UIManager : MonoBehaviour {
         gameStateManager.SendCurrentRoundEvent += SendCurrentRoundAction;
         gameStateManager.SendRoundDurationEvent += SendRoundDurationAction;
         gameStateManager.SendCurrentGameStateEvent += SendCurrentGameStateAction;
-        inputFields = GetComponentsInChildren<InputField>();
+        spawnManager.ADuckHasBeenSlainEvent += ADuckHasBeenSlainAction;
+    }
+
+    void ADuckHasBeenSlainAction()
+    {
+        if (numEnemiesLeftThisRound > 0)
+        {
+            numEnemiesLeftThisRound--;
+            inputFields[0].text = "Enemies this round: " + numEnemiesLeftThisRound;
+        }
     }
 
     void SendNumEnemiesToSpawnAction(int numEnemiesToSpawn)
     {
-        inputFields[0].text = "Enemies this round: " + numEnemiesToSpawn;
+        numEnemiesLeftThisRound = numEnemiesToSpawn;
+        inputFields[0].text = "Enemies this round: " + numEnemiesLeftThisRound;
     }
 
     void SendCurrentRoundAction(int currentRound)
@@ -32,7 +44,7 @@ public class UIManager : MonoBehaviour {
     void SendRoundDurationAction(float roundDuration)
     {
         currentRoundTime = roundDuration;
-        inputFields[2].text = "Round Duration: " + currentRoundTime;
+        inputFields[2].text = "Round Duration: " + string.Format("{0:.##}", currentRoundTime);
     }
 
     void SendCurrentGameStateAction(string currentGameState)
@@ -50,11 +62,11 @@ public class UIManager : MonoBehaviour {
         if (currentRoundTime > 0)
         {
             currentRoundTime -= Time.deltaTime;
-            inputFields[2].text = "Round Duration: " + currentRoundTime;
+            inputFields[2].text = "Round Duration: " + string.Format("{0:.##}", currentRoundTime);
         } else
         {
             currentRoundTime = 0.0f;
-            inputFields[2].text = "Round Duration: " + currentRoundTime;
+            inputFields[2].text = "Round Duration: " + string.Format("{0:.##}", currentRoundTime);
         }
     }
 

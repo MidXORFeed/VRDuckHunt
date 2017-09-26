@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class SpawnManager : MonoBehaviour {
 
+    public event Action ADuckHasBeenSlainEvent;
+
     public GameStateManager gameStateManager;
     public Rigidbody duck;
     public GameObject[] spawnVolumes;
@@ -20,12 +22,18 @@ public class SpawnManager : MonoBehaviour {
         
 	}
 
+    void EmitADuckHasBeenSlainEvent()
+    {
+        if (ADuckHasBeenSlainEvent != null)
+        {
+            ADuckHasBeenSlainEvent();
+        }
+    }
+
     private void SpawnEnemyAction()
     {
         GameObject randomSpawnVolume = GetRandomSpawnVolume();
-        Debug.Log(randomSpawnVolume);
         GameObject randomExitVolume = GetRandomExitVolume();
-        Debug.Log(randomExitVolume);
         Vector3 randomSpawnVolumePosition = GetRandomPositionInVolume(randomSpawnVolume);
         Vector3 randomExitVolumePosition = GetRandomPositionInVolume(randomExitVolume);
         Rigidbody duckClone = (Rigidbody) Instantiate(duck, randomSpawnVolumePosition, duck.rotation);
@@ -37,6 +45,7 @@ public class SpawnManager : MonoBehaviour {
     private void ADuckHasBeenKilledAction()
     {
         gameStateManager.numRemainingEnemies -= 1;
+        EmitADuckHasBeenSlainEvent();
     }
 
     private GameObject GetRandomSpawnVolume()
