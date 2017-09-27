@@ -8,6 +8,8 @@ public class DuckBehavior : MonoBehaviour
     public event Action DeathEvent;
     public float maxHealth;
     public float currentHealth;
+    private float sinkSpeed = 1.0f;
+    public float deathTimer;
 
     public Transform targetPlayer;
     public Transform exit;
@@ -20,9 +22,10 @@ public class DuckBehavior : MonoBehaviour
     public float raycastDamping = 100f;
 
     private Transform target;
-    private DuckState currentState;
+    public DuckState currentState;
+    private bool isAlreadyDead;
 
-    private enum DuckState
+    public enum DuckState
     {
         Flying,
         Falling,
@@ -40,36 +43,61 @@ public class DuckBehavior : MonoBehaviour
 
     void Start()
     {
+        maxHealth = 100.0f;
+        deathTimer = 5.0f;
         currentHealth = maxHealth;
         currentState = DuckState.Flying;
+        isAlreadyDead = false;
     }
 
     void Update()
     {
-        Target();
-        Pathfinding();
-        Move();
+        switch (currentState)
+        {
+            case DuckState.Flying:
+                Target();
+                Pathfinding();
+                Move();
+                break;
+            case DuckState.Falling:
+                break;
+        }        
     }
 
     void OnCollisionEnter(Collision collision)
     {
+        switch (collision.gameObject.tag)
+        {
+            case "Bullet":
+                if (collision.gameObject.GetComponent<Bullet>() != null)
+                {
+                    TakeDamage(collision.gameObject.GetComponent<Bullet>().attackDamage);
+                }
+                break;
+            case "Ground":
+                if (currentState != DuckState.Sinking)
+                {
+                    currentState = DuckState.Sinking;
+                    Destroy(this.gameObject, deathTimer);
+                }
+                break;
+            default:
+                break;
+        }
         // May have to write a new collision method for detecting bullets which
         // involves drawing a line between the bullet from the previous frame 
         // and current frame and check if the line intersects the duck
-        if (collision.gameObject.tag == "Bullet" && collision.gameObject.GetComponent<Bullet>() != null)
-        {
-            TakeDamage(collision.gameObject.GetComponent<Bullet>().attackDamage);
-        }
     }
 
     void TakeDamage(float damageValue)
     {
-        if ((currentHealth -= damageValue) <= 0.0f)
+        if ((currentHealth -= damageValue) <= 0.0f && !isAlreadyDead)
         {
+            isAlreadyDead = true;
             currentHealth = 0.0f;
             currentState = DuckState.Falling;
+            GetComponent<Rigidbody>().useGravity = true;
             DeathAction();
-            GetComponentInChildren<SkinnedMeshRenderer>().enabled = false;
         }
         
     }
