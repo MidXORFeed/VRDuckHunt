@@ -208,7 +208,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4662189205445152}
   m_Layer: 0
-  m_Name: RestTriggerTransform
+  m_Name: MaxTriggerTransform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -358,7 +358,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4316360082845216}
   m_Layer: 0
-  m_Name: MaxTriggerTransform
+  m_Name: RestTriggerTransform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -622,7 +622,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1716378331908986}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.00046051, y: 0, z: 0}
+  m_LocalPosition: {x: 0.00453949, y: 0.4082509, z: -0.2934852}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4321565325851478}
@@ -795,7 +795,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1280504087395166}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.00453949, y: 0.4082509, z: -0.2934852}
+  m_LocalPosition: {x: 0.004, y: 0.4082509, z: -0.36}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4321565325851478}
@@ -2016,8 +2016,8 @@ MonoBehaviour:
   magazineSlot: {fileID: 1597942452097772}
   trigger: {fileID: 1778483467027432}
   slide: {fileID: 114490882534611756}
-  restTriggerTransform: {fileID: 4662189205445152}
-  maxTriggerTransform: {fileID: 4316360082845216}
+  restTriggerTransform: {fileID: 4316360082845216}
+  maxTriggerTransform: {fileID: 4662189205445152}
   bulletSpawn: {fileID: 4538633215992464}
   caseSpawn: {fileID: 4787836854679232}
   gunshotSound: {fileID: 114480902295929900}

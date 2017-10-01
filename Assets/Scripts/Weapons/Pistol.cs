@@ -189,8 +189,10 @@ public class Pistol : Gun
         base.Update();
         if (controllerEvents)
         {
-            float pressure = (maxTriggerTransform.localPosition.x - restTriggerTransform.localPosition.x) * controllerEvents.GetTriggerAxis();
-            trigger.transform.localPosition = new Vector3(restTriggerTransform.localPosition.x + pressure, trigger.transform.localPosition.y, trigger.transform.localPosition.z);
+            float pressureX = (maxTriggerTransform.localPosition.x - restTriggerTransform.localPosition.x) * controllerEvents.GetTriggerAxis();
+            float pressureY = (maxTriggerTransform.localPosition.y - restTriggerTransform.localPosition.y) * controllerEvents.GetTriggerAxis();
+            float pressureZ = (maxTriggerTransform.localPosition.z - restTriggerTransform.localPosition.z) * controllerEvents.GetTriggerAxis();
+            trigger.transform.localPosition = new Vector3(restTriggerTransform.localPosition.x + pressureX, restTriggerTransform.localPosition.y + pressureY, restTriggerTransform.localPosition.z + pressureZ);
         } else
         {
             trigger.transform.localPosition = new Vector3(restTriggerTransform.localPosition.x, restTriggerTransform.localPosition.y, restTriggerTransform.localPosition.z);
