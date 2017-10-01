@@ -1881,17 +1881,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waveFiles:
-  - {fileID: 8300000, guid: b9eeb83b567727745b91e85fb0bc909d, type: 3}
-  - {fileID: 8300000, guid: 79f8c3f84a9f7d442be6772c0e5f6727, type: 3}
-  - {fileID: 8300000, guid: 00991d9a6882fbf4a9fab410179b14b9, type: 3}
-  - {fileID: 8300000, guid: 3db1912b7fcf531479fd05bff65209db, type: 3}
-  - {fileID: 8300000, guid: 89723997472b6584ca1a56eda40dbb8c, type: 3}
-  - {fileID: 8300000, guid: 022318638e342ea4dbf26c34092a1c95, type: 3}
-  - {fileID: 8300000, guid: fd44bc10c3c678c488238fafdb6c7116, type: 3}
-  - {fileID: 8300000, guid: 91fe3877cb25d3a40ba09ca9a1c61e82, type: 3}
-  volMin: 0.1
+  - {fileID: 8300000, guid: c2d6b543acb90844eb62c0f7af6498da, type: 3}
+  - {fileID: 8300000, guid: 568c12c7475417442aa777669adc5253, type: 3}
+  - {fileID: 8300000, guid: c8d7c6f0cd7e0a54ea0b74f8910b200b, type: 3}
+  - {fileID: 8300000, guid: ab2f4c570fdfe98479ae391735c14011, type: 3}
+  volMin: 0.24
   volMax: 0.3
-  pitchMin: 0.6
+  pitchMin: 0.85
   pitchMax: 1
   playOnAwake: 0
 --- !u!114 &114490882534611756
